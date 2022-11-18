@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theOnlineShop.mapper.userListMapper">
+    <select id="selectOne" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where id = #{id}
+    </select>
+
+    <select id="selectListAll" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist
+    </select>
+
+    <select id="selectListByUserName" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where UserName =#{userName}
+    </select>
+
+    <select id="selectListByUserAge" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where age =#{age}
+    </select>
+
+<!--    <select id="selectListByUserId" resultType="com.testBatis.db.UserDb">-->
+<!--        select * from userlist where Id =#{id}-->
+<!--    </select>-->
+
+    <select id="selectlistByPassword" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where password=#{password}
+    </select>
+
+    <select id="selectlistByEmail" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where email=#{email}
+    </select>
+
+    <select id="selectListByUserAddress" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where address =#{address}
+    </select>
+
+    <select id="loginByPasswordAndUserName" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where userName=#{userName} and password=#{password}
+    </select>
+
+    <insert id="insertUser" parameterType="com.theOnlineShop.domain.userEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO userlist (userName,password,email,age,address)
+        values(#{username},#{password},#{email},#{age},#{address})
+    </insert>
+
+
+    <delete id="deleteUserById" parameterType="com.theOnlineShop.domain.userEntity">
+        DELETE FROM userlist where Id=#{id}
+    </delete>
+
+
+    <update id="updateUser" parameterType="com.theOnlineShop.domain.userEntity">
+        Update userlist Set password=#{password}, age=#{age}, address=#{address}
+        Where id=#{id} and userName=#{username}
+    </update>
+</mapper>

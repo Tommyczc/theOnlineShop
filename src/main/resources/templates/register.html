@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+<!--    <link th:href="@{/bootstrap-4.1.3/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+    <script th:src="@{/js/register.js}"></script>
+<!--    <script th:src="@{/bootstrap-4.1.3/js/bootstrap.min.js}"></script>-->
+    <title>Welcome</title>
+</head>
+
+<body>
+<div class="bg"></div>
+<div class="container animated fadeIn">
+    <div style="text-align: center;">
+        <h2>
+            <a href="#">Register</a>
+        </h2>
+    </div>
+    <hr>
+    <form id="loginForm">
+        <div style="text-align: center;">
+            <div>
+                <input type="text" id="inputUserName" name="username" placeholder="Username" value="">
+                <input type="password" id="inputPassword" name="password" placeholder="Password">
+                <input type="password" name="password" id="inputPasswordConfirm" placeholder="Password Again">
+                <input type="email" name="email" id="inputEmail" placeholder="Email">
+                <input type="number" name="age" id="inputAge" placeholder="Age(Optional)">
+                <input type="text" name="address" id="inputAddress" placeholder="Address(Optional)">
+                <label id="codeLabel">Email Verification Code: <input type="text" name="veriCode" id="inputVeriCode" placeholder="Email Verification Code"></label>
+            </div>
+            <p class="a-link"><a href="/login">Already have account?</a></p>
+            <button type="submit">Register</button>
+        </div>
+        <br>
+    </form>
+</div>
+<ul class="bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function(){
+        var inputVeriCode=document.getElementById('codeLabel');
+        inputVeriCode.style.display='none';
+        //对表单数据进行筛查
+        $('#loginForm').submit(function() {
+            var userName=$(this).find('#inputUserName').val();
+            var password=$(this).find('#inputPassword').val();
+            var passwordConfir=$(this).find('#inputPasswordConfirm').val();
+            var email=$(this).find('#inputEmail').val();
+            var age=$(this).find('#inputAge').val();
+            var address=$(this).find('#inputAddress').val();
+
+            //对表单数据进行筛查,过滤无用数据
+            if(userName=="" ||userName==null){
+                alert("User name should not be empty!");
+                return false;
+            }
+            else if(password=="" || password==null){
+                alert("Password should not be empty!");
+            }
+            else if(password!==passwordConfir){
+                alert("Password is not equal!");
+                $(this).find('#inputPasswordConfirm').html("");
+                $(this).find('#inputPassword').html("");
+                return false;
+            }
+            else if(email=="" || email==null){
+                alert("Email should not be empty!");
+                return false;
+            }
+
+            if(inputVeriCode.style.display=="none"){
+                var emailData=new FormData();
+                emailData.append('email',email);
+                emailData.append('userName',userName);
+                submitEmailCheckRequest(emailData);
+            }
+            else if(inputVeriCode.style.display=="display"){
+                var code=$(this).find('#inputVeriCode').val();
+                if(code==null||code==""){
+                    alert("Please enter the verification code!");
+                    return false;
+                }
+                var form=$(this)[0];
+                var formData=new FormData(form);
+                submitRegisterRequest(formData);
+            }
+            return false;
+        });
+    });
+
+
+</script>

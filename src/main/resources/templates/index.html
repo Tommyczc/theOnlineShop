@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+        <title>Welcome</title>
+    </head>
+
+    <body>
+    <div th:text="${failInfo}" id="msg" style="display:none"></div>
+
+        <div class="bg"></div>
+        <div class="container animated fadeIn">
+            <div style="text-align: center;">
+                <h2>
+                    <a href="#">Login</a>
+                </h2>
+            </div>
+            <hr>
+            <form id="loginForm" th:action="@{/loginLogic}" th:object="${userEntity}" th:method="post">
+                <div style="text-align: center;">
+                    <div>
+                        <input type="text" name="username" placeholder="Username" th:field="*{userName}" value="">
+                        <input type="password" name="password" placeholder="Password" th:field="*{password}">
+                    </div>
+                    <p class="a-link"><a href="/register">New User?</a></p>
+                    <p class="a-link"><a href="/forgetPass">Forget Password?</a></p>
+                    <button type="submit">Login</button>
+                </div>
+                <br>
+            </form>
+        </div>
+        <ul class="bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </body>
+</html>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var message2=$("#msg").html();
+
+        if(message2!="") {
+            alert(message2)
+        }
+
+    })
+</script>

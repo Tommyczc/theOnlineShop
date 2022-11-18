@@ -1,0 +1,37 @@
+server:
+  #端口
+  port: 8082
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+    check-template: true
+    check-template-location: true
+
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/theonlineshop?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password:
+
+  servlet:
+    multipart:
+      # 最大上传文件
+      max-file-size: 10MB
+      # 最大请求文件
+      max-request-size: 20MB
+
+mybatis:
+  # 实体类包名
+  typeAliasesPackage: com.theOnlineShop.domain
+  # mapper文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # mybatis配置文件
+  configLocation: classpath:Mybatis/MybatisConfig.xml
