@@ -10,4 +10,5 @@ public interface userListMapper {
     public List<userEntity> loginByPasswordAndUserName(userEntity user);
     public Void insertUser(userEntity user);
     public List<userEntity> selectlistByEmail(userEntity user);
+    public List<userEntity> selectListByUserNameAndEmail(userEntity user);
 }

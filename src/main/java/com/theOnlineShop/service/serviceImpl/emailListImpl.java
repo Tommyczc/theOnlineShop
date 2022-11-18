@@ -1,4 +1,10 @@
 package com.theOnlineShop.service.serviceImpl;
 
-public class emailListImpl {
+import com.theOnlineShop.service.emailListInter;
+import org.springframework.stereotype.Service;
+
+@Service
+public class emailListImpl implements emailListInter {
+
+
 }

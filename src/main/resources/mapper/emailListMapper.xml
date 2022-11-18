@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theOnlineShop.mapper.emailListMapper">
+
+    <select id="selectListAll" resultType="com.theOnlineShop.domain.emailVerificationEntity">
+        select * from emailverificationlist
+    </select>
+
+    <select id="selectListByUserNameAndEmail" resultType="com.theOnlineShop.domain.emailVerificationEntity">
+        select * from emailverificationlist where userName=#{userName}
+    </select>
+
+    <insert id="insertVerificationCode" parameterType="com.theOnlineShop.domain.emailVerificationEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO emailverificationlist (userName,email,code,time)
+        values(#{userName},#{email},#{code},#{time})
+    </insert>
+
+</mapper>

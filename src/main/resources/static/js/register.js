@@ -15,7 +15,7 @@ function submitEmailCheckRequest(emailData){
                 document.getElementById('codeLabel').style.display="block";
             }
             else{
-                alert("error: "+data['responseBody']);
+                alert("error: "+data['messageBody']);
             }
             return false;
         },

@@ -1,4 +1,4 @@
-package com.theOnlineShop.controller;
+package com.theOnlineShop.controller.pathInterceptor;
 
 import com.theOnlineShop.domain.userEntity;
 import org.springframework.stereotype.Controller;

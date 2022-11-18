@@ -3,8 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.theOnlineShop.mapper.userListMapper">
-    <select id="selectOne" resultType="com.theOnlineShop.domain.userEntity">
+    <select id="selectById" resultType="com.theOnlineShop.domain.userEntity">
         select * from userlist where id = #{id}
+    </select>
+
+    <select id="selectListByUserNameAndEmail" resultType="com.theOnlineShop.domain.userEntity">
+        select * from userlist where userName=#{userName} and email=#{email}
     </select>
 
     <select id="selectListAll" resultType="com.theOnlineShop.domain.userEntity">
@@ -12,7 +16,7 @@
     </select>
 
     <select id="selectListByUserName" resultType="com.theOnlineShop.domain.userEntity">
-        select * from userlist where UserName =#{userName}
+        select * from userlist where userName =#{userName}
     </select>
 
     <select id="selectListByUserAge" resultType="com.theOnlineShop.domain.userEntity">
