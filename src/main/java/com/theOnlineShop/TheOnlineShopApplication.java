@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.theOnlineShop.mapper")
 @EnableTransactionManagement
 public class TheOnlineShopApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(TheOnlineShopApplication.class, args);
     }

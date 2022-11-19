@@ -1,4 +1,4 @@
-package com.theOnlineShop.shiroSecurity.filter;
+package com.theOnlineShop.security.filter;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

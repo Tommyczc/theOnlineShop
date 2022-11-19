@@ -8,13 +8,13 @@
         select * from emailverificationlist
     </select>
 
-    <select id="selectListByUserNameAndEmail" resultType="com.theOnlineShop.domain.emailVerificationEntity">
-        select * from emailverificationlist where userName=#{userName}
+    <select id="selectListByEmail" resultType="com.theOnlineShop.domain.emailVerificationEntity">
+        select * from emailverificationlist where email=#{email}
     </select>
 
     <insert id="insertVerificationCode" parameterType="com.theOnlineShop.domain.emailVerificationEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO emailverificationlist (userName,email,code,time)
-        values(#{userName},#{email},#{code},#{time})
+        INSERT INTO emailverificationlist (email,code,time)
+        values(#{email},#{code},#{time})
     </insert>
 
 </mapper>

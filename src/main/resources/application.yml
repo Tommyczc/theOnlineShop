@@ -28,6 +28,18 @@ spring:
       # 最大请求文件
       max-request-size: 20MB
 
+  mail:
+    host: smtp.gmail.com    #邮箱服务器地址
+    username: chenzicong18@gmail.com   #邮箱账号
+    password: svntxzbjkpalnikh       #邮箱授权码
+    default-encoding: utf-8    #默认编码
+    port: 465
+
+#邮件发件人
+mail:
+  fromMail:
+    fromAddress: chenzicong18@gmail.com
+
 mybatis:
   # 实体类包名
   typeAliasesPackage: com.theOnlineShop.domain
@@ -35,3 +47,7 @@ mybatis:
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # mybatis配置文件
   configLocation: classpath:Mybatis/MybatisConfig.xml
+
+#自己写的加密配置
+EncryptionKey:
+  aes-key: 114565635638776587578

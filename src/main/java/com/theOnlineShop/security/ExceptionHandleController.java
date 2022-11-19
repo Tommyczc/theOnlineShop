@@ -1,4 +1,4 @@
-package com.theOnlineShop.shiroSecurity;
+package com.theOnlineShop.security;
 
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;

@@ -6,19 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.sql.Date;
 
 public class emailVerificationEntity {
-    private String userName;
+
     private String email;
     private String code;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getEmail() {
         return email;

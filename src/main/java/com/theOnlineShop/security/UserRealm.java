@@ -1,4 +1,4 @@
-package com.theOnlineShop.shiroSecurity;
+package com.theOnlineShop.security;
 
 import com.theOnlineShop.domain.userEntity;
 import com.theOnlineShop.service.userListInter;

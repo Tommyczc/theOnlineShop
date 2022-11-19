@@ -9,6 +9,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ public class indexLogicController {
 
     @Autowired
     private userListInter userList;
+
+    @Value("${EncryptionKey.aes-key}")
+    private String aesKey;
 
     @RequestMapping(value=("/loginLogic"), method= RequestMethod.POST)
     public String loginLogic(userEntity user, Model model){
@@ -38,14 +42,24 @@ public class indexLogicController {
                                         @RequestParam(value="email",required = true) String email){
 
         try {
+
             userEntity user = new userEntity();
             user.setUserName(userName);
             user.setEmail(email);
-            //检测邮件是否重复使用
-            boolean isDuplicate = userList.emailDuplicateCheck(user);
-            if(isDuplicate){
+            //检测邮件和用户名是否重复使用
+            boolean isDuplicated = userList.emailDuplicateCheck(user);
+            boolean nameIsDuplicated=userList.userNameDuplicateCheck(user);
+            if(nameIsDuplicated){
+                return new httpReponseEntity("error","User name is duplicated");
+            }
+            else if(isDuplicated){
                 return new httpReponseEntity("error","Other user has use this email");
             }
+
+            //生成验证码并且上传到数据库
+
+
+
         }catch(Exception e){
             return new httpReponseEntity("error",e.getMessage());
         }

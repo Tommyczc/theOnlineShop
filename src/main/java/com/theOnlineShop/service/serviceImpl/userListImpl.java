@@ -28,10 +28,17 @@ public class userListImpl implements userListInter {
      */
     @Override
     public boolean emailDuplicateCheck(userEntity user) {
-        List<userEntity> userList=userMapper.selectListByUserNameAndEmail(user);
+        List<userEntity> userList=userMapper.selectlistByEmail(user);
         if(userList.size()==0){
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean userNameDuplicateCheck(userEntity user) {
+        List<userEntity> userList=userMapper.selectListByUserName(user);
+        if(userList.size()==0){return true;}
         return false;
     }
 }

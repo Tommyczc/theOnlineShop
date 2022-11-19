@@ -1,6 +1,6 @@
-package com.theOnlineShop.shiroSecurity;
+package com.theOnlineShop.security;
 
-import com.theOnlineShop.shiroSecurity.filter.imageFilter;
+import com.theOnlineShop.security.filter.imageFilter;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
