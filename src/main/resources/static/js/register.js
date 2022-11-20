@@ -17,7 +17,7 @@ function submitEmailCheckRequest(emailData){
             else{
                 alert("error: "+data['messageBody']);
             }
-            return false;
+            //return false;
         },
 
         error:function(e){
@@ -25,7 +25,7 @@ function submitEmailCheckRequest(emailData){
             return false;
         }
     });
-    return false;
+    //return false;
 }
 
 function submitRegisterRequest(formData){

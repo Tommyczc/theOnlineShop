@@ -4,6 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.theOnlineShop.mapper.emailListMapper">
 
+    <resultMap id="Base_Resul_tMap" type="com.theOnlineShop.domain.emailVerificationEntity">
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
     <select id="selectListAll" resultType="com.theOnlineShop.domain.emailVerificationEntity">
         select * from emailverificationlist
     </select>
@@ -16,5 +22,14 @@
         INSERT INTO emailverificationlist (email,code,time)
         values(#{email},#{code},#{time})
     </insert>
+
+    <delete id="deleteVerificationCode" parameterType="com.theOnlineShop.domain.emailVerificationEntity">
+        DELETE FROM emailverificationlist where email=#{email}
+    </delete>
+
+    <update id="updateVerificationCode" parameterType="com.theOnlineShop.domain.emailVerificationEntity">
+        Update emailverificationlist Set code=#{code} and time=#{time}
+        Where email=#{email}
+    </update>
 
 </mapper>

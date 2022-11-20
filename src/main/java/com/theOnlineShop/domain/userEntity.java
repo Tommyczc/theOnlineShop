@@ -6,7 +6,7 @@ public class userEntity {
     private String password;
     private String email;
     private String address;
-    private int age;
+    private String age;
 
     public userEntity(){}
 
@@ -55,11 +55,11 @@ public class userEntity {
         this.address = address;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 }

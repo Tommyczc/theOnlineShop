@@ -60,6 +60,7 @@
             var email=$(this).find('#inputEmail').val();
             var age=$(this).find('#inputAge').val();
             var address=$(this).find('#inputAddress').val();
+            var code=$(this).find('#inputVeriCode').val();
 
             //对表单数据进行筛查,过滤无用数据
             if(userName=="" ||userName==null){
@@ -87,7 +88,6 @@
                 submitEmailCheckRequest(emailData);
             }
             else if(inputVeriCode.style.display=="display"){
-                var code=$(this).find('#inputVeriCode').val();
                 if(code==null||code==""){
                     alert("Please enter the verification code!");
                     return false;

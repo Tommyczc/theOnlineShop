@@ -2,6 +2,7 @@ package com.theOnlineShop.controller.logic;
 
 import com.theOnlineShop.domain.httpReponseEntity;
 import com.theOnlineShop.domain.userEntity;
+import com.theOnlineShop.security.emailVerification.emailUtils;
 import com.theOnlineShop.service.userListInter;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -23,8 +24,11 @@ public class indexLogicController {
     @Autowired
     private userListInter userList;
 
-    @Value("${EncryptionKey.aes-key}")
+    @Value("${personal.EncryptionKey.aes-key}")
     private String aesKey;
+
+    @Autowired
+    private emailUtils emailTools;
 
     @RequestMapping(value=("/loginLogic"), method= RequestMethod.POST)
     public String loginLogic(userEntity user, Model model){
@@ -42,7 +46,6 @@ public class indexLogicController {
                                         @RequestParam(value="email",required = true) String email){
 
         try {
-
             userEntity user = new userEntity();
             user.setUserName(userName);
             user.setEmail(email);
@@ -56,11 +59,13 @@ public class indexLogicController {
                 return new httpReponseEntity("error","Other user has use this email");
             }
 
-            //生成验证码并且上传到数据库
+            //生成验证码 上传到数据库 发送验证码到指定邮箱
+            emailTools.emailVerification(email,"注册账号");
 
 
 
         }catch(Exception e){
+            System.out.println(e.getMessage());
             return new httpReponseEntity("error",e.getMessage());
         }
         return new httpReponseEntity("success","Have sent the verification code to your email, please have a check.");
@@ -68,9 +73,9 @@ public class indexLogicController {
 
 
     //shiro登录
-    private String login(String txtUsername, String txtPassword){
+    private String login(String username, String password){
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(txtUsername,txtPassword);
+        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 
         try{
             subject.login(token);

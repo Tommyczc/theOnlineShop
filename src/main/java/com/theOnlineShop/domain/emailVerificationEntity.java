@@ -1,16 +1,22 @@
 package com.theOnlineShop.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class emailVerificationEntity {
 
     private String email;
     private String code;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date time;
+
+    public emailVerificationEntity(){}
 
     public String getEmail() {
         return email;
@@ -28,11 +34,12 @@ public class emailVerificationEntity {
         this.code = code;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     public Date getTime() {
         return time;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     public void setTime(Date time) {
         this.time = time;
     }

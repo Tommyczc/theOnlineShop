@@ -8,6 +8,8 @@ import java.util.List;
 @Mapper
 public interface emailListMapper {
     public List<emailVerificationEntity> selectListAll();
-    public List<emailVerificationEntity> selectListByUserNameAndEmail(emailVerificationEntity email);
+    public List<emailVerificationEntity> selectListByEmail(emailVerificationEntity email);
     public void insertVerificationCode(emailVerificationEntity email);
+    public void deleteVerificationCode(emailVerificationEntity email);
+    public void updateVerificationCode(emailVerificationEntity email);
 }

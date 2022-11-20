@@ -15,26 +15,26 @@ import java.util.Arrays;
 
 @Service
 public class EmailService  {
+
     @Autowired
     private JavaMailSender mailSender;
     /**
      * 邮件发件人
      */
-    @Value("${mail.fromMail.fromAddress}")
+    @Value("${personal.mail.fromMail.fromAddress}")
     private String fromAddress;
+
     @Autowired
     TemplateEngine templateEngine;
-    @Autowired
-    private VerificationCodeGeneration verificationCodeService;
 
-    public boolean sendEmailVerificationCode(String toAddress) {
-        //调用 VerificationCodeService 生产验证码
-        String verifyCode = verificationCodeService.generateVerificationCode();
+    public boolean sendEmailVerificationCode(String toAddress, String verifyCode, String behavior) {
+
         //创建邮件正文
         Context context = new Context();
         context.setVariable("verifyCode", Arrays.asList(verifyCode.split("")));
+        context.setVariable("behavior",behavior);
         //将模块引擎内容解析成html字符串
-        String emailContent = templateEngine.process("emailVerificationPage", context);
+        String emailContent = templateEngine.process("verificationPage/emailVerificationPage", context);
         MimeMessage message=mailSender.createMimeMessage();
         try {
             //true表示需要创建一个multipart message
