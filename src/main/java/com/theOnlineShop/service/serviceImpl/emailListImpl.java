@@ -33,26 +33,37 @@ public class emailListImpl implements emailListInter {
             Date date = new Date();
 
             //验证码过期了就刷新,否则返回未过期的验证码
-            if( (int) ((date.getTime() - emailList.get(0).getTime().getTime()) / (1000 * 60))>0.1){
-                System.out.println("code expired");
+            if( (int) ((date.getTime() - emailList.get(0).getTime().getTime()) / (1000 * 60))>expiredTime){
                 emailMapper.updateVerificationCode(email);
                 return null;
             }
             else{
-                System.out.println("code not expired");
                 return emailList.get(0);
             }
         }
         else{
-            System.out.println("insert code: "+email.getCode());
             emailMapper.insertVerificationCode(email);
-
             return null;
         }
     }
 
     @Override
     public boolean checkEmailVeri(emailVerificationEntity email) {
+        List<emailVerificationEntity> emailList=emailMapper.selectListByEmailAndCode(email);
+
+        if(emailList.size()>0){
+            if( (int) ((email.getTime().getTime() - emailList.get(0).getTime().getTime()) / (1000 * 60))<=expiredTime){
+                return true;
+            }
+        }
         return false;
     }
+
+    @Override
+    public boolean deleteEmailVeri(emailVerificationEntity email) {
+        int i=emailMapper.deleteVerificationCode(email);
+        if(i==1){return true;}
+        return false;
+    }
+
 }

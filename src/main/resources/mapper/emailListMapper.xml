@@ -18,6 +18,10 @@
         select * from emailverificationlist where email=#{email}
     </select>
 
+    <select id="selectListByEmailAndCode" resultType="com.theOnlineShop.domain.emailVerificationEntity">
+            select * from emailverificationlist where email=#{email} and code=#{code}
+    </select>
+
     <insert id="insertVerificationCode" parameterType="com.theOnlineShop.domain.emailVerificationEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO emailverificationlist (email,code,time)
         values(#{email},#{code},#{time})
@@ -28,7 +32,7 @@
     </delete>
 
     <update id="updateVerificationCode" parameterType="com.theOnlineShop.domain.emailVerificationEntity">
-        Update emailverificationlist Set code=#{code} and time=#{time}
+        Update emailverificationlist Set code=#{code} , time=#{time}
         Where email=#{email}
     </update>
 

@@ -18,14 +18,15 @@ public class EmailService  {
 
     @Autowired
     private JavaMailSender mailSender;
-    /**
-     * 邮件发件人
-     */
+
     @Value("${personal.mail.fromMail.fromAddress}")
     private String fromAddress;
 
     @Autowired
     TemplateEngine templateEngine;
+
+    @Value("${personal.mail.expiredTime}")
+    private int expiredTime;
 
     public boolean sendEmailVerificationCode(String toAddress, String verifyCode, String behavior) {
 
@@ -33,6 +34,7 @@ public class EmailService  {
         Context context = new Context();
         context.setVariable("verifyCode", Arrays.asList(verifyCode.split("")));
         context.setVariable("behavior",behavior);
+        context.setVariable("expiredTime",expiredTime);
         //将模块引擎内容解析成html字符串
         String emailContent = templateEngine.process("verificationPage/emailVerificationPage", context);
         MimeMessage message=mailSender.createMimeMessage();

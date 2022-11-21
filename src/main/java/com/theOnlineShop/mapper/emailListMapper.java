@@ -9,7 +9,8 @@ import java.util.List;
 public interface emailListMapper {
     public List<emailVerificationEntity> selectListAll();
     public List<emailVerificationEntity> selectListByEmail(emailVerificationEntity email);
-    public void insertVerificationCode(emailVerificationEntity email);
-    public void deleteVerificationCode(emailVerificationEntity email);
-    public void updateVerificationCode(emailVerificationEntity email);
+    public int insertVerificationCode(emailVerificationEntity email);
+    public int deleteVerificationCode(emailVerificationEntity email);
+    public int updateVerificationCode(emailVerificationEntity email);
+    public List<emailVerificationEntity> selectListByEmailAndCode(emailVerificationEntity email);
 }

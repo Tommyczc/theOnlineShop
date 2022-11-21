@@ -17,7 +17,7 @@ spring:
   #数据库连接配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.1.4:3306/theonlineshop?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/theonlineshop?useUnicode=true&characterEncoding=utf-8
     username: root
     password:
 
@@ -58,3 +58,13 @@ personal:
     expiredTime: 5
     fromMail:
       fromAddress: 870667475@qq.com
+
+  #权限角色数量 -1默认该权限角色数量为 无限
+  role:
+    #超级管理员数量
+    superAdminNum: 1
+    #管理员数量
+    adminNum: 5
+    #用户
+    userNum: -1
+

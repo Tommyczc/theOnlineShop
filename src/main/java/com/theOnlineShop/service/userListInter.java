@@ -7,4 +7,5 @@ public interface userListInter {
     public boolean login(userEntity user);
     public boolean emailDuplicateCheck(userEntity user);
     public boolean userNameDuplicateCheck(userEntity user);
+    public boolean register(userEntity user);
 }

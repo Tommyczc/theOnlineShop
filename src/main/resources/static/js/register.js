@@ -12,20 +12,18 @@ function submitEmailCheckRequest(emailData){
         success: function(data) {
             if(data['messageType']=='success') {
                 alert(data["messageBody"]);
-                document.getElementById('codeLabel').style.display="block";
             }
             else{
                 alert("error: "+data['messageBody']);
             }
-            //return false;
         },
 
         error:function(e){
             alert("error: "+e.responseText);
-            return false;
+
         }
     });
-    //return false;
+
 }
 
 function submitRegisterRequest(formData){
@@ -41,8 +39,10 @@ function submitRegisterRequest(formData){
         //contentType: "application/json;charset=utf8",
         success: function(data) {
             if(data['messageType']=='success') {
-                alert(data["responseBody"]);
+                alert(data["messageBody"]);
+
             }
+            else{alert(data["messageBody"]);}
         },
 
         error:function(e){

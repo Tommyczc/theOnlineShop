@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
@@ -20,7 +20,7 @@
         </h2>
     </div>
     <hr>
-    <form id="loginForm">
+<!--    <form id="loginForm">-->
         <div style="text-align: center;">
             <div>
                 <input type="text" id="inputUserName" name="username" placeholder="Username" value="">
@@ -29,13 +29,13 @@
                 <input type="email" name="email" id="inputEmail" placeholder="Email">
                 <input type="number" name="age" id="inputAge" placeholder="Age(Optional)">
                 <input type="text" name="address" id="inputAddress" placeholder="Address(Optional)">
-                <label id="codeLabel">Email Verification Code: <input type="text" name="veriCode" id="inputVeriCode" placeholder="Email Verification Code"></label>
+                <label id="codeLabel">Verification Code: <input type="text" name="veriCode" id="inputVeriCode" placeholder="Email Verification Code"></label>
             </div>
             <p class="a-link"><a href="/login">Already have account?</a></p>
-            <button type="submit">Register</button>
+            <button type="button" id="submitButton" onclick="submitEmail()" >Register</button>
         </div>
         <br>
-    </form>
+<!--    </form>-->
 </div>
 <ul class="bubbles">
     <li></li>
@@ -49,56 +49,77 @@
 
 
 <script>
-    $(document).ready(function(){
-        var inputVeriCode=document.getElementById('codeLabel');
-        inputVeriCode.style.display='none';
-        //对表单数据进行筛查
-        $('#loginForm').submit(function() {
-            var userName=$(this).find('#inputUserName').val();
-            var password=$(this).find('#inputPassword').val();
-            var passwordConfir=$(this).find('#inputPasswordConfirm').val();
-            var email=$(this).find('#inputEmail').val();
-            var age=$(this).find('#inputAge').val();
-            var address=$(this).find('#inputAddress').val();
-            var code=$(this).find('#inputVeriCode').val();
+    //js是世界上最好的语言，操
+    window.onload=function (){
+        document.getElementById('codeLabel').style.display="none";
+    }
 
-            //对表单数据进行筛查,过滤无用数据
-            if(userName=="" ||userName==null){
-                alert("User name should not be empty!");
-                return false;
-            }
-            else if(password=="" || password==null){
-                alert("Password should not be empty!");
-            }
-            else if(password!==passwordConfir){
-                alert("Password is not equal!");
-                $(this).find('#inputPasswordConfirm').html("");
-                $(this).find('#inputPassword').html("");
-                return false;
-            }
-            else if(email=="" || email==null){
-                alert("Email should not be empty!");
-                return false;
-            }
 
-            if(inputVeriCode.style.display=="none"){
-                var emailData=new FormData();
-                emailData.append('email',email);
-                emailData.append('userName',userName);
-                submitEmailCheckRequest(emailData);
-            }
-            else if(inputVeriCode.style.display=="display"){
-                if(code==null||code==""){
-                    alert("Please enter the verification code!");
-                    return false;
-                }
-                var form=$(this)[0];
-                var formData=new FormData(form);
-                submitRegisterRequest(formData);
-            }
-            return false;
-        });
-    });
+    function submitRequest() {
+        var userName=document.getElementById('inputUserName').value;
+        var password=document.getElementById('inputPassword').value
+        var passwordConfir=document.getElementById('inputPasswordConfirm').value;
+        var email=document.getElementById('inputEmail').value;
+        var age=document.getElementById('inputAge').value;
+        var address=document.getElementById('inputAddress').value;
+        var code=document.getElementById('inputVeriCode').value;
 
+        //对表单数据进行筛查,过滤无用数据
+        if(userName=="" ||userName==null){
+            alert("User name should not be empty!");
+
+        }
+        else if(password=="" || password==null){
+            alert("Password should not be empty!");
+
+        }
+        else if(password!==passwordConfir){
+            alert("Password is not equal!");
+            document.getElementById('inputPasswordConfirm').value="";
+            document.getElementById('inputPassword').value="";
+
+        }
+        else if(email=="" || email==null){
+            alert("Email should not be empty!");
+
+        }
+
+        else if(code==null||code==""){
+            alert("Please enter the verification code!");
+        }
+        else{
+            var formData=new FormData();
+            formData.append("userName",userName);
+            formData.append("password",password);
+            formData.append("email",email);
+            formData.append("age",age);
+            formData.append("address",address);
+            formData.append("code",code);
+            submitRegisterRequest(formData);
+        }
+    }
+
+    function submitEmail(){
+        var userName=document.getElementById('inputUserName').value;
+        var email=document.getElementById('inputEmail').value;
+        var formData=new FormData();
+        if(userName=="" ||userName==null){
+            alert("User name should not be empty!");
+        }
+        else if(email=="" || email==null){
+            alert("Email should not be empty!");
+        }
+        else {
+            formData.append("userName", userName);
+            formData.append("email", email);
+            submitEmailCheckRequest(formData);
+            var button=document.getElementById('submitButton');
+            document.getElementById('codeLabel').style.display="block";
+            button.onclick=function (){
+                submitRequest();
+            }
+        }
+
+    }
 
 </script>

@@ -45,7 +45,7 @@
 
     <insert id="insertUser" parameterType="com.theOnlineShop.domain.userEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO userlist (userName,password,email,age,address)
-        values(#{username},#{password},#{email},#{age},#{address})
+        values(#{userName},#{password},#{email},#{age},#{address})
     </insert>
 
 

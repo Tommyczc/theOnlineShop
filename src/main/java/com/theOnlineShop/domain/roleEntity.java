@@ -4,6 +4,12 @@ public class roleEntity {
     private String userName;
     private String roleName;
 
+    public roleEntity(){}
+    public roleEntity(String userName, String roleName){
+        this.roleName=roleName;
+        this.userName=userName;
+    }
+
     public String getUserName() {
         return userName;
     }

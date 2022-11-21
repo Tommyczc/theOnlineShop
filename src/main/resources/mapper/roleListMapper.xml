@@ -5,7 +5,11 @@
 <mapper namespace="com.theOnlineShop.mapper.roleListMapper">
 
     <select id="selectListByUserName" resultType="com.theOnlineShop.domain.roleEntity">
-        select * from rolelist where userName =#{username}
+        select * from rolelist where userName =#{userName}
+    </select>
+
+    <select id="selectListByRoleName" resultType="com.theOnlineShop.domain.roleEntity">
+            select * from rolelist where roleName =#{roleName}
     </select>
 
     <select id="selectListAll" resultType="com.theOnlineShop.domain.roleEntity">
@@ -20,5 +24,10 @@
     <delete id="deleteRole" parameterType="com.theOnlineShop.domain.roleEntity">
         Delete from rolelist where userName=#{userName} and roleName=#{roleName}
     </delete>
+
+    <update id="updateRole" parameterType="com.theOnlineShop.domain.roleEntity">
+            Update rolelist Set role=#{role}
+            Where userName=#{userName}
+    </update>
 
 </mapper>

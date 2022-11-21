@@ -41,4 +41,11 @@ public class userListImpl implements userListInter {
         if(userList.size()==0){return true;}
         return false;
     }
+
+    @Override
+    public boolean register(userEntity user) {
+        int i=userMapper.insertUser(user);
+        if(i==1){return true;}
+        return false;
+    }
 }

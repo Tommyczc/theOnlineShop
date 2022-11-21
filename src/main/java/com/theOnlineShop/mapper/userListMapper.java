@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface userListMapper {
     public List<userEntity> loginByPasswordAndUserName(userEntity user);
-    public Void insertUser(userEntity user);
+    public int insertUser(userEntity user);
     public List<userEntity> selectlistByEmail(userEntity user);
     public List<userEntity> selectListByUserNameAndEmail(userEntity user);
     public List<userEntity> selectListByUserName(userEntity user);
