@@ -34,43 +34,31 @@ public class ShiroConfig {
         //初始化一个ShiroFilter工程类
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
-
         Map<String, Filter> filterObjMap = new LinkedHashMap<>();
         filterObjMap.put("imageFilter", new imageFilter()); //匿名访问静态资源
         shiroFilterFactoryBean.setFilters(filterObjMap);
 
-
-
-        //我们知道Shiro是通过SecurityManager来管理整个认证和授权流程的，这个SecurityManager可以在下面初始化
+        //Shiro是通过SecurityManager来管理整个认证和授权流程的，这个SecurityManager可以在下面初始化
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         Map<String, String> filterMap = new LinkedHashMap<>();
 
          //Shiro过滤器常用的有如下几种
         filterMap.put("/login", "anon");
-
         filterMap.put("/fail", "anon");
+
         //filterMap.put("/api/user/notics", "authc");
         //注意，roles[user,admin]对应的用户是 《同时》 拥有这两种身份的用户
         filterMap.put("/admin/**", "roles[admin]");
         filterMap.put("/guest/**", "authc");
         filterMap.put("/theOnloneShow/**","authc");
-        //filterMap.put("/public/**", "anon"); //匿名访问静态资源
         filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
-
-
-
-        //filterMap.put("/**", "authc");
-
-
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
-        //用户没登录被拦截后，当然需要调转到登录页了，这里配置登录页
+        //配置登录页
         shiroFilterFactoryBean.setLoginUrl("/login");
         return shiroFilterFactoryBean;
     }
-
-
 
     @Bean(name = "lifecycleBeanPostProcessor")
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -135,14 +123,12 @@ public class ShiroConfig {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //如果httyOnly设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
         simpleCookie.setHttpOnly(true);
-        //记住我cookie生效时间,默认30天 ,单位秒：60 * 60 * 24 * 30
+        //记住我cookie生效时间,默认5天 ,单位秒：60 * 60 * 24 * 30
         simpleCookie.setMaxAge(60 * 60 * 24 * 5);
         //simpleCookie.setMaxAge(60*1);
 
         return simpleCookie;
     }
-
-
 
     /**
      * 自定义Realm，当SecurityBean需要来查询相关权限信息时，需要有Realm代劳

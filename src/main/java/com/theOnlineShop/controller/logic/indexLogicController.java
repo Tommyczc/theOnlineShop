@@ -44,18 +44,13 @@ public class indexLogicController {
     @Autowired
     private emailUtils emailTools;
 
-    @Value("${personal.role.adminNum}")
-    private int adminNum;
-
-    @Value("${personal.role.superAdminNum}")
-    private int superAdminNum;
 
     @RequestMapping(value=("/loginLogic"), method= RequestMethod.POST)
     public String loginLogic(userEntity user, Model model){
         String info=login(user.getUserName(),user.getPassword());
         if(!info.equals("success")){
             model.addAttribute("failInfo","Fail Information: "+info);
-            return "index";
+            return "login";
         }
         return "redirect:/theOnlineShop/welcomePage";
     }
@@ -117,6 +112,7 @@ public class indexLogicController {
             //开始插入用户信息
             userEntity user=new userEntity(AesUtils.encrypt(userName,aesKey), Md5Utils.encrypt(password));
             user.setEmail(AesUtils.encrypt(email,aesKey));
+            user.setRegisterTime(new Date());
             if(age!=null){
                 user.setAge(AesUtils.encrypt(age,aesKey));
             }

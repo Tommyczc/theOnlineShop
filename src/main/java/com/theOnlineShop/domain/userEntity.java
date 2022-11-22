@@ -1,5 +1,9 @@
 package com.theOnlineShop.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class userEntity {
     private int id;
     private String userName;
@@ -7,6 +11,9 @@ public class userEntity {
     private String email;
     private String address;
     private String age;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    private Date registerTime;
 
     public userEntity(){}
 
@@ -61,5 +68,15 @@ public class userEntity {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }

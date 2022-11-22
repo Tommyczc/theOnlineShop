@@ -12,6 +12,7 @@ function submitEmailCheckRequest(emailData){
         success: function(data) {
             if(data['messageType']=='success') {
                 alert(data["messageBody"]);
+                document.getElementById('codeLabel').style.display="block";
             }
             else{
                 alert("error: "+data['messageBody']);

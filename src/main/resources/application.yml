@@ -1,3 +1,11 @@
+#online shop 版本控制
+theOnlineShop:
+  Name: Online Shop
+  Version: 1.0.0
+  Github: https://github.com/Tommyczc/theOnlineShop
+  Copyright: 2022
+
+#服务器配置
 server:
   #端口
   port: 8082
@@ -5,6 +13,7 @@ server:
     uri-encoding: UTF-8
 
 spring:
+  #thymeleaf配置
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
