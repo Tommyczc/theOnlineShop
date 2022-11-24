@@ -11,6 +11,7 @@ public class userEntity {
     private String email;
     private String address;
     private String age;
+    private String headSculpture;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date registerTime;
@@ -44,6 +45,14 @@ public class userEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHeadSculpture() {
+        return headSculpture;
+    }
+
+    public void setHeadSculpture(String headSculpture) {
+        this.headSculpture = headSculpture;
     }
 
     public String getEmail() {

@@ -38,11 +38,10 @@
 <!--    </form>-->
 </div>
 <ul class="bubbles">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+    <li><a style="color: white" th:href="${version.getGitHub()}">Github</a></li>
+    <li>[(${version.getName()})]</li>
+    <li>Version: [(${version.version})]</li>
+    <li>Copyright: [(${version.copyright})]</li>
 </ul>
 </body>
 </html>

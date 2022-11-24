@@ -48,4 +48,9 @@ public class userListImpl implements userListInter {
         if(i==1){return true;}
         return false;
     }
+
+    @Override
+    public List<userEntity> getUserInformation(userEntity user) {
+        return userMapper.selectListByUserName(user);
+    }
 }
