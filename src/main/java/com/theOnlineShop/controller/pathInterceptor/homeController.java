@@ -40,7 +40,14 @@ public class homeController {
         //解密
         userEntity deUser=new userEntity();
         deUser.setUserName(AesUtils.decrypt(userList.get(0).getUserName(),aesKey));
-
+        if(userList.get(0).getHeadSculpture()!=null){
+            deUser.setHeadSculpture(AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
+        }
+        else{
+            //加入默认
+        }
+        model.addAttribute("userInformation",deUser);
+        //role
         return "index";
     }
 }
