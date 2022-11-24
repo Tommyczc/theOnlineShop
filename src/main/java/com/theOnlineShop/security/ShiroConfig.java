@@ -51,7 +51,7 @@ public class ShiroConfig {
         //注意，roles[user,admin]对应的用户是 《同时》 拥有这两种身份的用户
         filterMap.put("/admin/**", "roles[admin]");
         filterMap.put("/guest/**", "authc");
-        filterMap.put("/theOnloneShow/**","authc");
+        filterMap.put("/theOnlineShop/**","authc");
         filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
