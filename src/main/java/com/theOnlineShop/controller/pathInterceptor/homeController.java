@@ -43,8 +43,10 @@ public class homeController {
         if(userList.get(0).getHeadSculpture()!=null){
             deUser.setHeadSculpture(AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
         }
+
         else{
-            //加入默认
+            //加入默认头像
+            deUser.setHeadSculpture("/image/avatar/user.png");
         }
         model.addAttribute("userInformation",deUser);
         //role

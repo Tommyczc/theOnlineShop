@@ -52,7 +52,7 @@ public class ShiroConfig {
         filterMap.put("/admin/**", "roles[admin]");
         filterMap.put("/guest/**", "authc");
         filterMap.put("/theOnlineShop/**","authc");
-        filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
+        //filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         //配置登录页

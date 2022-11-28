@@ -35,13 +35,13 @@
             <el-row type="flex" class="row-bg" justify="center" style="height:8%;background-color: #007bff" align="middle">
 
                 <el-col :span="6"><div class="grid-content bg-purple">
-                    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; text-align: center; vertical-align: middle"></el-avatar>
+                    <el-avatar th:src="@{${userInformation.getHeadSculpture()}}" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; text-align: center; vertical-align: middle"></el-avatar>
                 </div></el-col>
 
                 <el-col :span="6"><div class="grid-content bg-purple">
                     <el-row type="flex" class="row-bg" justify="center" >
 
-                        <span style="font-size: small; font-family: Arial; vertical-align: top; margin-top: 5px">王小虎</span>
+                        <span style="font-size: small; font-family: Arial; vertical-align: top; margin-top: 5px">[(${userInformation.getUserName()})]</span>
 
                     </el-row>
 
@@ -118,14 +118,14 @@
 
                     <el-col :span="6"><div class="grid-content" style="text-align: right;">
                         <el-dropdown >
-                            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="margin-right: 10px; vertical-align: middle"></el-avatar>
+                            <el-avatar th:src="@{${userInformation.getHeadSculpture()}}" style="margin-right: 10px; vertical-align: middle"></el-avatar>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item><i class="el-icon-user-solid"></i>Main Page</el-dropdown-item>
+                                <el-dropdown-item><i class="el-icon-user-solid"></i>Personal Page</el-dropdown-item>
                                 <el-dropdown-item><i class="el-icon-s-tools"></i>Change Password</el-dropdown-item>
                                 <el-dropdown-item><i class="el-icon-switch-button"></i>Logout</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <span style=" vertical-align: middle">王小虎</span>
+                        <span align="middle">[(${userInformation.getUserName()})]</span>
                     </div></el-col>
 
                 </el-row>
