@@ -10,4 +10,9 @@ public class pathController {
     public String toMain(){
         return "main";
     }
+
+    @RequestMapping("/viewProduct")
+    public String toViewProduct(){
+        return "test";
+    }
 }
