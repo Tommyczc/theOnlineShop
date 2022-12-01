@@ -74,14 +74,14 @@ class UserRealm extends AuthorizingRealm {
         info.setStringPermissions(permissions);
         info.setRoles(roles);
 
-        System.out.println("roles: "+roles);
-        System.out.println("permissions: "+permissions);
+        //System.out.println("roles: "+roles);
+        //System.out.println("permissions: "+permissions);
 
         return info;
     }
 
 
-    //get the roles by user name
+    //get the roles by username
     private Set<String> getRoleByUserName(String username){
         roleEntity role=new roleEntity();
         role.setUserName(AesUtils.encrypt(username,aesKey));
@@ -94,13 +94,13 @@ class UserRealm extends AuthorizingRealm {
     }
 
     //get the permission by role name
-    private Set<String> getPermissionByRoleName(String rolename){
+    private Set<String> getPermissionByRoleName(String roleName){
         permissionEntity permission=new permissionEntity();
-        permission.setRoleName(rolename);
+        permission.setRoleName(roleName);
         List<permissionEntity> permissionList=permissionMapper.findPermission(permission);
         Set<String> permissionName=new HashSet<>();
         for(permissionEntity thePermission:permissionList){
-            permissionName.add(thePermission.getRoleName());
+            permissionName.add(thePermission.getPermission());
         }
         return permissionName;
     }

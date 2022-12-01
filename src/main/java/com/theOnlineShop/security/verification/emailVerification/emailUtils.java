@@ -1,4 +1,4 @@
-package com.theOnlineShop.security.emailVerification;
+package com.theOnlineShop.security.verification.emailVerification;
 
 import com.theOnlineShop.domain.emailVerificationEntity;
 import com.theOnlineShop.security.encryption.AesUtils;

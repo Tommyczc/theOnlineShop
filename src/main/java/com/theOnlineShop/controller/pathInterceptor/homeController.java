@@ -17,22 +17,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/theOnlineShop")
 public class homeController {
-    @Value("${theOnlineShop.Github}")
-    private String gitHub;
-    @Value("${theOnlineShop.Name}")
-    private String name;
-    @Value("${theOnlineShop.Version}")
-    private String version;
-    @Value("${theOnlineShop.Copyright}")
-    private String copyright;
     @Autowired
     private userListInter userService;
     @Value("${personal.EncryptionKey.aes-key}")
     private String aesKey;
+    @Autowired
+    private versionControllerDomain version;
 
     @RequestMapping("/welcomePage")
     public String toWelcomePage(Model model){
-        model.addAttribute("version",new versionControllerDomain(gitHub,name,version,copyright));
+        model.addAttribute("version",version);
 
         userEntity user=new userEntity();
         user.setUserName(AesUtils.encrypt(SecurityUtils.getSubject().getPrincipals().toString(),aesKey));
@@ -49,7 +43,7 @@ public class homeController {
             deUser.setHeadSculpture("/image/avatar/user.png");
         }
         model.addAttribute("userInformation",deUser);
-        //role
+        //System.out.println(SecurityUtils.getSubject().getPrincipal().toString());
         return "index";
     }
 }

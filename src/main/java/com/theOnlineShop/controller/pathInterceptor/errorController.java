@@ -15,7 +15,7 @@ public class errorController {
         Subject subject=SecurityUtils.getSubject();
         if(!subject.isAuthenticated()){model.addAttribute("failInf","Exception 403: "+"sorry, please login");}
         else{model.addAttribute("failInf","Exception 403:"+"User "+subject.getPrincipals()+", you do not have authorization to access this page");}
-        return "UnauthorizedExceptionPage";
+        return "errorPage/UnauthorizedExceptionPage";
     }
 
     @RequestMapping("/401")
@@ -23,6 +23,6 @@ public class errorController {
         Subject subject=SecurityUtils.getSubject();
         if(!subject.isAuthenticated()){model.addAttribute("failInf","Exception 401: "+"sorry, please login");}
         else{model.addAttribute("failInf","Exception 401:"+"User "+subject.getPrincipals()+", you do not have authorization to access this page");}
-        return "AuthorizedExceptionPage";
+        return "errorPage/AuthorizedExceptionPage";
     }
 }

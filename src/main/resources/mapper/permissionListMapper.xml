@@ -5,7 +5,7 @@
 <mapper namespace="com.theOnlineShop.mapper.permissionListMapper">
 
     <select id="selectListByRoleName" resultType="com.theOnlineShop.domain.permissionEntity">
-        select * from permissionlist where roleName =#{rolename}
+        select * from permissionlist where roleName = #{roleName}
     </select>
 
 </mapper>

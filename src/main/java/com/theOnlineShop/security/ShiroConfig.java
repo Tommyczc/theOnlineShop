@@ -1,5 +1,6 @@
 package com.theOnlineShop.security;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.theOnlineShop.security.filter.imageFilter;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -57,33 +58,42 @@ public class ShiroConfig {
 
         //配置登录页
         shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         return shiroFilterFactoryBean;
     }
 
-    @Bean(name = "lifecycleBeanPostProcessor")
-    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
 
     /**
-     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     * (这段注释代码仅对jsp有效) 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     */
+//    @Bean(name = "lifecycleBeanPostProcessor")
+//    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+//        return new LifecycleBeanPostProcessor();
+//    }
+
+//    @Bean
+//    @DependsOn("lifecycleBeanPostProcessor")
+//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+//        DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
+//        creator.setProxyTargetClass(true);
+//        return creator;
+//    }
+//
+//    @Bean
+//    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+//        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+//        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+//        return authorizationAttributeSourceAdvisor;
+//    }
+
+    /**
+     * 开启shiro在thymeleaf的标签
+     * @return
      */
     @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
-        creator.setProxyTargetClass(true);
-        return creator;
+    public ShiroDialect getShiroDialect() {
+        return new ShiroDialect();
     }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-        return authorizationAttributeSourceAdvisor;
-    }
-
-
 
     /**
      * SecurityManager管理认证、授权整个流程

@@ -7,6 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface permissionListMapper {
-    public List<permissionEntity> selectListByRoleName();
+    public List<permissionEntity> selectListByRoleName(permissionEntity permission);
 
 }

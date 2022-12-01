@@ -1,4 +1,4 @@
-package com.theOnlineShop.security.emailVerification;
+package com.theOnlineShop.security.verification.emailVerification;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

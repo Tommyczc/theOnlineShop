@@ -16,6 +16,6 @@ public class permissionListImpl implements permissionListInter {
 
     @Override
     public List<permissionEntity> findPermission(permissionEntity permission) {
-        return permissionMapper.selectListByRoleName();
+        return permissionMapper.selectListByRoleName(permission);
     }
 }

@@ -1,23 +1,27 @@
 package com.theOnlineShop.controller.system.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class versionControllerDomain {
-
     private String gitHub;
-
     private String name;
-
     private String version;
-
     private String copyright;
 
-    public versionControllerDomain(String gitHub, String name, String version, String copyright){
-        this.version=version;
+    @Autowired
+    public versionControllerDomain(@Value("${theOnlineShop.Github}") String gitHub,
+                                   @Value("${theOnlineShop.Name}") String name,
+                                   @Value("${theOnlineShop.Version}") String version,
+                                   @Value("${theOnlineShop.Copyright}") String copyright){
         this.gitHub=gitHub;
         this.name=name;
+        this.version=version;
         this.copyright=copyright;
     }
+
 
     public String getGitHub() {
         return gitHub;
@@ -28,7 +32,7 @@ public class versionControllerDomain {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -36,7 +40,7 @@ public class versionControllerDomain {
     }
 
     public String getVersion() {
-        return version;
+        return this.version;
     }
 
     public void setVersion(String version) {
@@ -44,7 +48,7 @@ public class versionControllerDomain {
     }
 
     public String getCopyright() {
-        return copyright;
+        return this.copyright;
     }
 
     public void setCopyright(String copyright) {

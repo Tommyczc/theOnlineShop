@@ -5,7 +5,7 @@ import com.theOnlineShop.domain.emailVerificationEntity;
 import com.theOnlineShop.domain.httpReponseEntity;
 import com.theOnlineShop.domain.roleEntity;
 import com.theOnlineShop.domain.userEntity;
-import com.theOnlineShop.security.emailVerification.emailUtils;
+import com.theOnlineShop.security.verification.emailVerification.emailUtils;
 import com.theOnlineShop.security.encryption.AesUtils;
 import com.theOnlineShop.security.encryption.Md5Utils;
 import com.theOnlineShop.service.emailListInter;
@@ -41,22 +41,15 @@ public class indexLogicController {
     private String aesKey;
     @Autowired
     private emailUtils emailTools;
-    @Value("${theOnlineShop.Github}")
-    private String gitHub;
-    @Value("${theOnlineShop.Name}")
-    private String name;
-    @Value("${theOnlineShop.Version}")
-    private String version;
-    @Value("${theOnlineShop.Copyright}")
-    private String copyright;
-
+    @Autowired
+    private versionControllerDomain version;
 
     @RequestMapping(value=("/loginLogic"), method= RequestMethod.POST)
     public String loginLogic(userEntity user, Model model){
         String info=login(user.getUserName(),user.getPassword());
         if(!info.equals("success")){
             model.addAttribute("failInfo","Fail Information: "+info);
-            model.addAttribute("version",new versionControllerDomain(gitHub,name,version,copyright));
+            model.addAttribute("version",version);
             model.addAttribute("userEntity", new userEntity());
             return "login";
         }
@@ -149,7 +142,7 @@ public class indexLogicController {
     public String logout(HttpSession session, Model model) {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        model.addAttribute("version",new versionControllerDomain(gitHub,name,version,copyright));
+        model.addAttribute("version",version);
         model.addAttribute("userEntity", new userEntity());
         model.addAttribute("failInfo","log out success！");
         return "login";
