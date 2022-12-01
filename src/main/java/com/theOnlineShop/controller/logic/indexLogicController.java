@@ -1,5 +1,6 @@
 package com.theOnlineShop.controller.logic;
 
+import com.theOnlineShop.controller.system.domain.versionControllerDomain;
 import com.theOnlineShop.domain.emailVerificationEntity;
 import com.theOnlineShop.domain.httpReponseEntity;
 import com.theOnlineShop.domain.roleEntity;
@@ -18,31 +19,36 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Controller
 public class indexLogicController {
-
     @Autowired
     private userListInter userList;
-
     @Autowired
     private emailListInter emailList;
-
     @Autowired
     private roleListInter roleList;
-
     @Value("${personal.EncryptionKey.aes-key}")
     private String aesKey;
-
     @Autowired
     private emailUtils emailTools;
+    @Value("${theOnlineShop.Github}")
+    private String gitHub;
+    @Value("${theOnlineShop.Name}")
+    private String name;
+    @Value("${theOnlineShop.Version}")
+    private String version;
+    @Value("${theOnlineShop.Copyright}")
+    private String copyright;
 
 
     @RequestMapping(value=("/loginLogic"), method= RequestMethod.POST)
@@ -50,6 +56,8 @@ public class indexLogicController {
         String info=login(user.getUserName(),user.getPassword());
         if(!info.equals("success")){
             model.addAttribute("failInfo","Fail Information: "+info);
+            model.addAttribute("version",new versionControllerDomain(gitHub,name,version,copyright));
+            model.addAttribute("userEntity", new userEntity());
             return "login";
         }
         return "redirect:/theOnlineShop/welcomePage";
@@ -84,6 +92,7 @@ public class indexLogicController {
         return new httpReponseEntity("success","Have sent the verification code to your email, please have a check.");
     }
 
+    @Transactional(rollbackFor = {Exception.class})
     @RequestMapping(value=("/registerLogic"), method= RequestMethod.POST)
     @ResponseBody
     public httpReponseEntity registerLogic(@RequestParam(value="userName",required = true) String userName,
@@ -134,6 +143,16 @@ public class indexLogicController {
             System.out.println(e.getMessage());
             return new httpReponseEntity("error",e.getMessage());}
         return new httpReponseEntity("success","register success!");
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        model.addAttribute("version",new versionControllerDomain(gitHub,name,version,copyright));
+        model.addAttribute("userEntity", new userEntity());
+        model.addAttribute("failInfo","log out success！");
+        return "login";
     }
 
 

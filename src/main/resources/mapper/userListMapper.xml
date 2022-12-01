@@ -33,10 +33,6 @@
         select * from userlist where age =#{age}
     </select>
 
-<!--    <select id="selectListByUserId" resultType="com.testBatis.db.UserDb">-->
-<!--        select * from userlist where Id =#{id}-->
-<!--    </select>-->
-
     <select id="selectlistByPassword" resultType="com.theOnlineShop.domain.userEntity">
         select * from userlist where password=#{password}
     </select>
@@ -58,11 +54,9 @@
         values(#{userName},#{password},#{email},#{age},#{address},#{registerTime})
     </insert>
 
-
     <delete id="deleteUserById" parameterType="com.theOnlineShop.domain.userEntity">
         DELETE FROM userlist where Id=#{id}
     </delete>
-
 
     <update id="updateUser" parameterType="com.theOnlineShop.domain.userEntity">
         Update userlist Set password=#{password}, age=#{age}, address=#{address}

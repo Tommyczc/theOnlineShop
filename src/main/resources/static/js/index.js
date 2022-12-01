@@ -114,17 +114,23 @@ $(function(){
         var isfound=false;
         $('.mainContent .RuoYi_iframe').each(function() {
             if ($(this).data('id') == href) {
-                $(this).show().siblings('.RuoYi_iframe').hide();
-                // app.openFullScreen();
-                //
-                // $('.mainContent iframe:visible').on('load', function() {
-                //     app.closeLoading();
-                // });
-                //isRefresh = $(this).data('refresh');
-                //alert($(this).data('id'));
-                isfound=true;
-                storage.set("url", href);
-                return false;
+                if($(this).data('id')=="/logout"){
+                    window.open($(this).data('id'));
+                    isfound=true;
+                }
+                else {
+                    $(this).show().siblings('.RuoYi_iframe').hide();
+                    // app.openFullScreen();
+                    //
+                    // $('.mainContent iframe:visible').on('load', function() {
+                    //     app.closeLoading();
+                    // });
+                    //isRefresh = $(this).data('refresh');
+                    //alert($(this).data('id'));
+                    isfound = true;
+                    storage.set("url", href);
+                    return false;
+                }
             }
         });
         if(!isfound) {

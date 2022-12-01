@@ -35,8 +35,7 @@ CREATE TABLE IF NOT EXISTS `emailverificationlist` (
 DROP TABLE IF EXISTS `permissionlist`;
 CREATE TABLE IF NOT EXISTS `permissionlist` (
   `roleName` varchar(50) NOT NULL,
-  `permission` varchar(50) NOT NULL,
-  KEY `roleName` (`roleName`)
+  `permission` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 数据导出被取消选择。
@@ -47,9 +46,7 @@ CREATE TABLE IF NOT EXISTS `productlist` (
   `userName` varchar(50) NOT NULL,
   `productName` varchar(50) NOT NULL,
   `productImageUrl` varchar(50) DEFAULT NULL,
-  `productDescription` varchar(200) DEFAULT NULL,
-  KEY `userName` (`userName`),
-  CONSTRAINT `FK_productlist_userlist` FOREIGN KEY (`userName`) REFERENCES `userlist` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
+  `productDescription` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 数据导出被取消选择。
@@ -59,10 +56,7 @@ DROP TABLE IF EXISTS `rolelist`;
 CREATE TABLE IF NOT EXISTS `rolelist` (
   `userName` varchar(50) NOT NULL,
   `roleName` varchar(10) NOT NULL,
-  UNIQUE KEY `userName` (`userName`),
-  KEY `roleName` (`roleName`),
-  CONSTRAINT `FK_rolelist_permissionlist` FOREIGN KEY (`roleName`) REFERENCES `permissionlist` (`roleName`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_rolelist_userlist` FOREIGN KEY (`userName`) REFERENCES `userlist` (`userName`) ON DELETE CASCADE ON UPDATE CASCADE
+  UNIQUE KEY `userName` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 数据导出被取消选择。
@@ -81,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `userlist` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `userName` (`userName`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 -- 数据导出被取消选择。
 
