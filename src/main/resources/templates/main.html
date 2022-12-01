@@ -25,7 +25,7 @@
         <el-main>
             <el-row>
                 <el-col :span="12"><div class="grid-content bg-purple" style="text-align: center">
-                    <p>hello, <span style="font-family: Arial; color: red"><a shiro:hasRole="admin">admin</a> <a shiro:hasRole="user">user</a></span> <shiro:principal />, welcome to the online shop<br> This program was designed by springboot, shiro, thymeleaf, mybatis, element-ui. <br>这是个基于网络安全所设计的网站，还有许多内容未完成, <a class="openWindow" th:href="${versionController.getGitHub()}"> 代码在github</a></p>
+                    <p><b>hello, <span style="font-family: Arial; color: red"><a shiro:hasRole="admin">admin</a> <a shiro:hasRole="user">user</a></span> <span style="font-family: Arial;color:blue;"><shiro:principal /></span></b>, welcome to the online shop<br> This program was designed by springboot, shiro, thymeleaf, mybatis, element-ui. <br>这是个基于网络安全所设计的网站，还有许多内容未完成, <a class="openWindow" th:href="${versionController.getGitHub()}"> 代码在github</a></p>
                 </div></el-col>
                 <el-col :span="12"><div class="grid-content bg-purple-light">
                     <p>hello</p>
