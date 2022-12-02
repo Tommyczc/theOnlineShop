@@ -1,7 +1,5 @@
-
 var app = new Vue({
     el: '#app',
-    loading:undefined,
     methods: {
         tableRowClassName({row, rowIndex}) {
             if (rowIndex === 1) {
@@ -29,20 +27,21 @@ var app = new Vue({
         },
 
         openFullScreen() {
-            loading = this.$loading({
+            let loading=this.$loading({
                 lock: false,
                 text: 'Loading',
                 spinner: 'el-icon-loading',
                 background: 'rgba(0, 0, 0, 0.6)'
             });
-            setTimeout(() => {
-                loading.close();
-                this.noteMessage("Sorry, there is something wrong","warning")
-            }, 5000);
+            // setTimeout(() => {
+            //     loading.close();
+            //     this.noteMessage("Sorry, there is something wrong","warning")
+            // }, 5000);
         },
 
         closeLoading(){
-           loading.close();
+            let loading=this.$loading();
+            loading.close();
         },
     },
     data() {
@@ -90,7 +89,15 @@ var storage = {
 $(function(){
     $('.menuItem').on('click', menuItem);
     if(storage.get("url")!=null){
-        insertIframe(storage.get("url"));
+        var isFound=false;
+        $('.mainContent .RuoYi_iframe').each(function() {
+            if ($(this).data('id') == storage.get("url")) {
+                isFound=true;
+            }
+        });
+        if(!isFound) {
+            insertIframe(storage.get("url"));
+        }
     }
 
     function getMainIframe(){
@@ -112,25 +119,24 @@ $(function(){
     function menuItem(){
         var href=$(this).attr('href');
         var isfound=false;
+        //登出
+        if(href=="/logout"){
+            top.location.href=href;
+            isfound=true;
+            return true;
+        }
         $('.mainContent .RuoYi_iframe').each(function() {
             if ($(this).data('id') == href) {
-                if($(this).data('id')=="/logout"){
-                    window.open($(this).data('id'));
-                    isfound=true;
-                }
-                else {
-                    $(this).show().siblings('.RuoYi_iframe').hide();
-                    // app.openFullScreen();
-                    //
-                    // $('.mainContent iframe:visible').on('load', function() {
-                    //     app.closeLoading();
-                    // });
-                    //isRefresh = $(this).data('refresh');
-                    //alert($(this).data('id'));
-                    isfound = true;
-                    storage.set("url", href);
-                    return false;
-                }
+                $(this).show().siblings('.RuoYi_iframe').hide();
+                // app.openFullScreen();
+                //
+                // $('.mainContent iframe:visible').on('load', function() {
+                //     app.closeLoading();
+                // });
+                //isRefresh = $(this).data('refresh');
+                isfound = true;
+                storage.set("url", href);
+                return false;
             }
         });
         if(!isfound) {
@@ -145,8 +151,9 @@ $(function(){
         target.attr('src', url).ready();
     }
 
-    function updateIframe(url){
-
+    function loadTimeOut(){
+        app.noteMessage("Sorry, there is something wrong","warning");
+        app.closeLoading();
     }
 
     function insertIframe(url){
@@ -161,8 +168,9 @@ $(function(){
 
         //加载页面
         app.openFullScreen();
-
+        var kill = setTimeout(loadTimeOut, 5000);
         $('.mainContent iframe:visible').on('load', function() {
+            clearTimeout(kill);
             app.closeLoading();
         });
         storage.set("url", url);

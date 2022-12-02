@@ -144,7 +144,7 @@ public class indexLogicController {
         subject.logout();
         model.addAttribute("version",version);
         model.addAttribute("userEntity", new userEntity());
-        model.addAttribute("failInfo","log out success！");
+        //model.addAttribute("failInfo","log out success！");
         return "login";
     }
 
