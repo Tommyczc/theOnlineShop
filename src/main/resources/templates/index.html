@@ -92,9 +92,17 @@
                     </el-menu-item-group>
                 </el-submenu>
 
+                <a shiro:hasRole="user">
+                    <el-submenu index="4" disabled="true">
+                        <template slot="title" ><i class="el-icon-s-custom disabled">Admin</i></template>
+                    </el-submenu>
+                </a>
+
+                <a shiro:hasAnyRoles="admin,superAdmin">
                 <el-submenu index="4">
                     <template slot="title"><i class="el-icon-s-custom"></i>Admin</template>
                 </el-submenu>
+                </a>
 
                 <el-submenu index="5">
                     <template slot="title"><i class="el-icon-setting"></i>Setting</template>
