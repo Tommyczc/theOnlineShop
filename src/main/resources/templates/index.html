@@ -27,32 +27,30 @@
 
         <el-aside width="16%" style="height:100%;background-color: rgb(238, 241, 246)">
 
-            <el-row type="flex" class="row-bg" justify="center" style="height: 8%;background-color: rgb(238, 241, 246); line-height: 100%" align="middle">
-                <el-col :span="6"><div class="grid-content bg-purple" style="line-height: 100%">
-                <span style="font-size: x-large; font-family: Arial; line-height:100%;">shop</span>
+            <el-row type="flex" class="row-bg" justify="center" style="height: 8%;background-color: #545c64; line-height: 100%; color:#ffd04b" align="middle">
+                <el-col :span="6"><div class="grid-content" background-color="#545c64" style="line-height: 100%; ">
+                <span style="font-size: x-large; font-family: Arial; line-height:100%;">Shop</span>
                 </div></el-col>
             </el-row>
 
-            <el-row type="flex" class="row-bg" justify="center" style="height:8%;background-color: #007bff" align="middle">
+            <el-row type="flex" class="row-bg" justify="center" style="height:8%;background-color: rgba(92,109,138,0.8);" align="middle">
 
                 <el-col :span="6"><div class="grid-content bg-purple">
-                    <el-avatar th:src="@{${userInformation.getHeadSculpture()}}" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; text-align: center; vertical-align: middle"></el-avatar>
+                    <el-avatar th:src="@{${userInformation.getHeadSculpture()}}" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; opacity: 1; text-align: center; vertical-align: middle"></el-avatar>
                 </div></el-col>
 
-                <el-col :span="6"><div class="grid-content bg-purple">
+                <el-col :span="6" style=""><div class="grid-content bg-purple">
                     <el-row type="flex" class="row-bg" justify="center" >
-
-                        <span style="font-size: small; font-family: Arial; vertical-align: top; margin-top: 5px">[(${userInformation.getUserName()})]</span>
-
+                        <span style="font-size: small; font-family: Arial; vertical-align: top; margin-top: 5px;">[(${userInformation.getUserName()})]</span>
                     </el-row>
 
 
-                    <el-row gutter="10">
+                    <el-row gutter="10" style="">
                         <el-link>
-                        <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-col :span="6"><div class="grid-content">
                         <i class="el-icon-switch-button"></i>
                         </div></el-col>
-                        <el-col :span="6" :offset="2"><div class="grid-content bg-purple">
+                        <el-col :span="6" :offset="2"><div class="grid-content">
                             <span style="font-size: small; font-family: Arial; vertical-align: bottom; margin-bottom: 5px">logout</span>
                         </div></el-col>
                         </el-link>
@@ -64,7 +62,9 @@
 
 
 
-            <el-menu :default-openeds="['1', '3']">
+            <el-menu  background-color="#545c64"
+                      text-color="#fff"
+                      active-text-color="#ffd04b" :default-openeds="['1', '3']">
                 <el-menu-item index="1-1" class="menuItem" th:href="@{/system/main}"><i class="el-icon-s-home"></i>Home</el-menu-item>
 
                 <el-submenu index="2">
@@ -83,8 +83,8 @@
                     <template slot="title"><i class="el-icon-user"></i>User</template>
                     <el-menu-item-group>
                         <template slot="title">Personal</template>
-                        <el-menu-item index="3-1">Information</el-menu-item>
-                        <el-menu-item index="3-2">Change Password</el-menu-item>
+                        <el-menu-item index="3-1" class="menuItem" th:href="@{/user/personalPage}">Information</el-menu-item>
+                        <el-menu-item index="3-2" class="menuItem" th:href="@{/system/changePassword}">Change Password</el-menu-item>
                         <el-menu-item index="3-3" class="menuItem" th:href="@{/logout}">Log Out</el-menu-item>
                     </el-menu-item-group>
                     <el-menu-item-group title="Social">

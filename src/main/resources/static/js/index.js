@@ -98,6 +98,7 @@ $(function(){
         if(!isFound) {
             insertIframe(storage.get("url"));
         }
+        refreshTab();
     }
 
     function getMainIframe(){
@@ -145,10 +146,20 @@ $(function(){
     }
 
     function refreshTab() {
-        var currentId = $('.page-tabs-content').find('.active').attr('data-id');
-        var target = $('.RuoYi_iframe[data-id="' + currentId + '"]');
-        var url = target.attr('src');
-        target.attr('src', url).ready();
+        var currentId;
+        $('.mainContent .RuoYi_iframe').each(function() {
+            if($(this).is(":visible")){
+                currentId=$(this).data('id');
+            }
+        });
+
+        if(currentId!=null || currentId!=undefined){
+            $('.menuItem').each(function(){
+                if($(this).attr('href')==currentId){
+                    $(this).click();
+                }
+            });
+        }
     }
 
     function loadTimeOut(){

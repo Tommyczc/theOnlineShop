@@ -23,14 +23,59 @@
 <div id="app">
     <template>
         <el-main>
-            <el-row>
-                <el-col :span="12"><div class="grid-content bg-purple" style="text-align: center">
-                    <p><b>Hello, <span style="font-family: Arial; color: red"><a shiro:hasRole="admin">admin</a> <a shiro:hasRole="user">user</a></span> <span style="font-family: Arial;color:blue;"><shiro:principal /></span></b>, welcome to the online shop<br> This program was designed by springboot, shiro, thymeleaf, mybatis, element-ui. <br>这是个基于网络安全所设计的网站，还有许多内容未完成, <a class="openWindow" th:href="${versionController.getGitHub()}"> 代码在github</a></p>
+            <el-row :gutter="20">
+                <h2 aria-hidden="true">简介</h2>
+                <el-col :span="12"><div class="grid-content" style="text-align: center; box-shadow: 0 2px 4px rgba(0, 0, 0, .22), 0 0 6px rgba(0, 0, 0, .24); min-height:100px; height: 150px">
+                    <h3>前言</h3><p style="text-align: left"><b>Hello, <span style="font-family: Arial; color: red"><a shiro:hasRole="admin">admin</a> <a shiro:hasRole="user">user</a></span> <span style="font-family: Arial;color:blue;"><shiro:principal /></span></b>, welcome to the online shop<br> This program was designed by springboot, shiro, thymeleaf, mybatis, element-ui. <br>这是个基于网络安全所设计的网站，还有许多内容未完成，有空再补，另外<a class="openWindow" th:href="${versionController.getGitHub()}"> 代码在github</a></p>
                 </div></el-col>
-                <el-col :span="12"><div class="grid-content bg-purple-light" style="text-align: center">
-                    <p>hello</p>
+                <el-col :span="12"><div class="grid-content " style="text-align: center; box-shadow: 0 2px 4px rgba(0, 0, 0, .22), 0 0 6px rgba(0, 0, 0, .24); min-height:100px; height: 150px">
+                    <h3>项目目的</h3>
+                    <p style="text-align: left">
+                        想做一个购物网站，用户可以自己购买和上传商品，还能定制个人信息，以及搜索其他用户信息。 <br>管理员可以修改用户信息。
+                    </p>
                 </div></el-col>
             </el-row>
+            <br>
+            <br>
+            <el-row >
+                <h2 aria-hidden="true">该项目所用的工具</h2>
+                <el-tabs tab-position="left" style="height: 200px;">
+                    <el-tab-pane label="Spring Boot">
+                        <p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者</p>
+                    </el-tab-pane>
+
+                    <el-tab-pane label="Shiro">
+                        <el-row :gutter="15">
+                            <el-col :span="8"><div class="grid-content">
+                                <h3 style="text-align: center">介绍</h3>
+                                <p>Apache Shiro是一个强大且易用的Java安全框架,能够用于身份验证、授权、加密和会话管理。Shiro拥有易于理解的API,您可以快速、轻松地获得任何应用程序——从最小的移动应用程序到最大的网络和企业应用程序。</p>
+                            </div></el-col>
+
+                            <el-col :span="8"><div class="grid-content">
+
+                            </div></el-col>
+
+                            <el-col :span="8"><div class="grid-content">
+
+                            </div></el-col>
+                        </el-row>
+                    </el-tab-pane>
+
+                    <el-tab-pane label="Mybatis">
+                        角色管理
+                    </el-tab-pane>
+
+                    <el-tab-pane label="Thymeleaf">
+                        定时任务补偿
+                    </el-tab-pane>
+
+                    <el-tab-pane label="Element Ui">
+                        定时任务补偿
+                    </el-tab-pane>
+
+                </el-tabs>
+            </el-row>
+
         </el-main>
     </template>
 </div>

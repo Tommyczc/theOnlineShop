@@ -43,7 +43,7 @@ public class EmailService  {
             MimeMessageHelper helper=new MimeMessageHelper(message,true);
             helper.setFrom(fromAddress);
             helper.setTo(toAddress);
-            helper.setSubject("注册验证码");
+            helper.setSubject(behavior+"验证码: "+verifyCode);
             helper.setText(emailContent,true);
             mailSender.send(message);
             return true;
