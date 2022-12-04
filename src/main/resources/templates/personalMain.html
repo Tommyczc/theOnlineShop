@@ -44,30 +44,42 @@
                                     <i class="el-icon-user"></i>
                                     User Name
                                 </template>
-                                []
+                                [(${user.getUserName()})]
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-message"></i>
+                                    E-mail
+                                </template>
+                                [(${user.getEmail()})]
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
                                     <i class="el-icon-location-outline"></i>
-                                    居住地
+                                    Address
                                 </template>
-                                苏州市
+                                [(${user.getAddress()})]
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-tickets"></i>
-                                    备注
+                                    <i class="el-icon-user"></i>
+                                    Age
                                 </template>
-                                <el-tag size="small">学校</el-tag>
+                                [(${user.getAge()})]
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-office-building"></i>
-                                    联系地址
+                                    <i class="el-icon-alarm-clock"></i>
+                                    Register Time
                                 </template>
-                                江苏省苏州市吴中区吴中大道 1188 号
+                                [(${user.getRegisterTime()})]
                             </el-descriptions-item>
+
                         </el-descriptions>
+                    </el-row>
+
+                    <el-row>
+                        <el-button type="primary" icon="el-icon-edit" circle></el-button>
                     </el-row>
 
                 </div></el-col>

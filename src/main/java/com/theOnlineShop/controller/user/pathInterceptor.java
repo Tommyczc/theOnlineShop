@@ -46,19 +46,21 @@ public class pathInterceptor {
 
         deUser.setEmail(AesUtils.decrypt(user.getEmail(),aesKey));
 
-        if(user.getAge()==null){
+        if(user.getAge()==null || user.getAge().isEmpty()){
             deUser.setAge("no information");
         }
         else{
             deUser.setAge(AesUtils.decrypt(user.getAge(),aesKey));
         }
 
-        if(user.getAddress()==null){
+        if(user.getAddress()==null || user.getAddress().isEmpty()){
             deUser.setAddress("no information");
         }
         else{
             deUser.setAddress(AesUtils.decrypt(user.getAddress(),aesKey));
         }
+
+        deUser.setRegisterTime(user.getRegisterTime());
 
         model.addAttribute("user",deUser);
         return "personalMain";
