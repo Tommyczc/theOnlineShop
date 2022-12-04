@@ -22,15 +22,43 @@
 <body>
 <div id="app">
     <template>
+        <el-main>
+<!--            动画-->
+            <transition name="el-zoom-in-top">
+                <div v-show="show" class="transition-box">
 
-        <el-row :gutter="20">
-            <el-col :span="12"><div class="grid-content" style="text-align: center; box-shadow: 0 2px 4px rgba(0, 0, 0, .22), 0 0 6px rgba(0, 0, 0, .24); min-height:100px; height: 150px">
-                <el-avatar th:src="@{${user.getHeadSculpture()}}" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; opacity: 1; text-align: center; vertical-align: middle"></el-avatar>
-            </div></el-col>
-        </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12" :offset="6" style="box-shadow: 0 2px 4px rgba(0, 0, 0, .22), 0 0 6px rgba(0, 0, 0, .24); text-align: center; background-color: rgba(60,60,100,0.2)"><div class="grid-content">
 
+                    <el-row>
+                        <div class="block"><el-avatar :size="50" th:src="@{${user.getHeadSculpture()}}" style="margin-top: 10px"></el-avatar>
+                        <br>
+                            <el-button size="small" round>上传头像</el-button>
+                        </div>
+                    </el-row>
+
+                    <el-row>
+                        <el-descriptions title="用户信息" direction="vertical">
+                            <el-descriptions-item label="用户名">kooriookami</el-descriptions-item>
+                            <el-descriptions-item label="手机号">18100000000</el-descriptions-item>
+                            <el-descriptions-item label="居住地">苏州市</el-descriptions-item>
+                            <el-descriptions-item label="备注">
+                                <el-tag size="small">学校</el-tag>
+                            </el-descriptions-item>
+                            <el-descriptions-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-descriptions-item>
+                        </el-descriptions>
+                    </el-row>
+
+                </div></el-col>
+            </el-row>
+
+                </div>
+            </transition>
+
+        </el-main>
     </template>
 </div>
 </body>
-<script th:src="@{/js/personalMain}"></script>
+<script th:src="@{/js/personalMain.js}"></script>
+<link rel="stylesheet" th:href="@{/css/main.css}">
 </html>
