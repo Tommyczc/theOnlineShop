@@ -187,7 +187,14 @@ $(function(){
         storage.set("url", url);
         // iframe.show().siblings('.RuoYi_iframe').hide();
     }
+
+
 });
+
+function logout(){
+    var href=$(this).attr('href');
+    top.location.href=href;
+}
 
 
 
