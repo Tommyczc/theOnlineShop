@@ -2,7 +2,7 @@ package com.theOnlineShop.controller.logic;
 
 import com.theOnlineShop.controller.system.domain.versionControllerDomain;
 import com.theOnlineShop.domain.emailVerificationEntity;
-import com.theOnlineShop.domain.httpReponseEntity;
+import com.theOnlineShop.vo.httpReponseEntity;
 import com.theOnlineShop.domain.roleEntity;
 import com.theOnlineShop.domain.userEntity;
 import com.theOnlineShop.security.verification.emailVerification.emailUtils;

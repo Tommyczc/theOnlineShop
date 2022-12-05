@@ -13,6 +13,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -34,6 +36,7 @@ class UserRealm extends AuthorizingRealm {
     //前面被authc拦截后，需要认证，SecurityBean会调用这里进行认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        Logger logger = LoggerFactory.getLogger(getClass());
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String unEncryptPass=String.copyValueOf(token.getPassword());
         //登录验证
@@ -42,10 +45,10 @@ class UserRealm extends AuthorizingRealm {
         boolean login=userMapper.login(user);
 
         //System.out.println(String.copyValueOf(token.getPassword()));
-        System.out.println(token.getUsername()+" login state:   "+login);
+        logger.info(token.getUsername()+" login state:   "+login);
 
         if (!login) {
-            System.out.println("not login");
+            logger.warn(token.getUsername()+" login state:   "+login);
             return null;
         } else {
             //System.out.println("login");

@@ -80,8 +80,10 @@ personal:
 
   #静态文件路径映射
   fileStore:
-#Windows地址配置
+    #Windows本地文件地址配置
     windowsStaticFileUrl: C:/uploadDoc/
-#Linux地址配置
+    #Linux本地文件地址配置
     linuxStaticFileUrl: /usr/nessystem/staticFiles
+    #映射路径
+    mappingAddress: /staticDocument/**
 

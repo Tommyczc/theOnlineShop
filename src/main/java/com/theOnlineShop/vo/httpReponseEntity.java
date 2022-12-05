@@ -1,4 +1,4 @@
-package com.theOnlineShop.domain;
+package com.theOnlineShop.vo;
 
 public class httpReponseEntity {
     private String messageType;

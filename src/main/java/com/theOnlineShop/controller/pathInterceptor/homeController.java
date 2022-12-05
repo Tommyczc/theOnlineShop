@@ -2,10 +2,12 @@ package com.theOnlineShop.controller.pathInterceptor;
 
 import com.theOnlineShop.controller.system.domain.versionControllerDomain;
 import com.theOnlineShop.domain.userEntity;
+import com.theOnlineShop.fileStore.fileUpload;
 import com.theOnlineShop.security.encryption.AesUtils;
 import com.theOnlineShop.service.userListInter;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.AesCipherService;
+import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ public class homeController {
     @Autowired
     private versionControllerDomain version;
 
+    @Autowired
+    private fileUpload fileUtils;
+
     @RequestMapping("/welcomePage")
     public String toWelcomePage(Model model){
         model.addAttribute("version",version);
@@ -34,8 +39,8 @@ public class homeController {
         //解密
         userEntity deUser=new userEntity();
         deUser.setUserName(AesUtils.decrypt(userList.get(0).getUserName(),aesKey));
-        if(userList.get(0).getHeadSculpture()!=null){
-            deUser.setHeadSculpture(AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
+        if(userList.get(0).getHeadSculpture()!=null && !userList.get(0).getHeadSculpture().isEmpty()){
+            deUser.setHeadSculpture("/staticDocument"+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
         }
         else{
             //加入默认头像

@@ -17,7 +17,7 @@ public class userListImpl implements userListInter {
     @Override
     public boolean login(userEntity user) {
         List<userEntity> userList=userMapper.loginByPasswordAndUserName(user);
-        if(userList.size()==1){
+        if(userList.size()>=1){
             return true;
         }
         return false;
@@ -52,5 +52,12 @@ public class userListImpl implements userListInter {
     @Override
     public List<userEntity> getUserInformation(userEntity user) {
         return userMapper.selectListByUserName(user);
+    }
+
+    @Override
+    public boolean uploadAvatar(userEntity user) {
+        int isUpload=userMapper.updateUserAvatar(user);
+        if(isUpload==1){return true;}
+        return false;
     }
 }

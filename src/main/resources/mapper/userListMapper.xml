@@ -62,4 +62,9 @@
         Update userlist Set password=#{password}, age=#{age}, address=#{address}
         Where id=#{id} and userName=#{username}
     </update>
+
+    <update id="updateUserAvatar" parameterType="com.theOnlineShop.domain.userEntity">
+        Update userlist Set headSculpture=#{headSculpture}
+        Where userName=#{userName}
+    </update>
 </mapper>

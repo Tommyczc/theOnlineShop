@@ -39,4 +39,22 @@ public class fileUtils {
     public String getCurrentUrl(){
         return os.getPath();
     }
+
+    public boolean checkFileSize(Long len, int size, String unit) {
+//        long len = file.length();
+        double fileSize = 0;
+        if ("B".equals(unit.toUpperCase())) {
+            fileSize = (double) len;
+        } else if ("K".equals(unit.toUpperCase())) {
+            fileSize = (double) len / 1024;
+        } else if ("M".equals(unit.toUpperCase())) {
+            fileSize = (double) len / 1048576;
+        } else if ("G".equals(unit.toUpperCase())) {
+            fileSize = (double) len / 1073741824;
+        }
+        if (fileSize > size) {
+            return false;
+        }
+        return true;
+    }
 }

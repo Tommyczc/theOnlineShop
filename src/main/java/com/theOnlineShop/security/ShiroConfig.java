@@ -1,6 +1,7 @@
 package com.theOnlineShop.security;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.theOnlineShop.security.filter.customizeFilter;
 import com.theOnlineShop.security.filter.imageFilter;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -20,8 +21,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.servlet.Filter;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Configuration
 public class ShiroConfig {
@@ -37,6 +40,10 @@ public class ShiroConfig {
 
         Map<String, Filter> filterObjMap = new LinkedHashMap<>();
         filterObjMap.put("imageFilter", new imageFilter()); //匿名访问静态资源
+        Set<String> other=new HashSet<>();
+        other.add("admin");
+        other.add("superAdmin");
+        filterObjMap.put("customizeFilter",new customizeFilter("/staticDocument/","/.*",true,other));
         shiroFilterFactoryBean.setFilters(filterObjMap);
 
         //Shiro是通过SecurityManager来管理整个认证和授权流程的，这个SecurityManager可以在下面初始化
@@ -54,6 +61,7 @@ public class ShiroConfig {
         filterMap.put("/guest/**", "authc");
         filterMap.put("/theOnlineShop/**","authc");
         //filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
+        //filterMap.put("/staticDocument/**","customizeFilter");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         //配置登录页

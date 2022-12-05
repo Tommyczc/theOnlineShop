@@ -33,7 +33,17 @@
                     <el-row>
                         <div class="block"><el-avatar :size="50" th:src="@{${user.getHeadSculpture()}}" style="margin-top: 10px"></el-avatar>
                         <br>
-                            <el-button size="small" round>上传头像</el-button>
+                            <el-upload
+                                    class="upload-demo"
+                                    th:action="@{/user/avatarUpload}"
+                                    :on-exceed="handleExceed"
+                                    :limit="1"
+                                    name="avatar"
+                                    >
+                                <el-button size="small" round>上传头像</el-button>
+                                <div slot="tip" class="el-upload__tip">只能上传图片文件，且不超过2M</div>
+                            </el-upload>
+
                         </div>
                     </el-row>
 

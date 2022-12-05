@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class customizeFilter extends AccessControlFilter {
     private String prefixUrl;
     private String suffixUrl;
+    //"/.*"
     private boolean withUserName;
     private Set<String> otherViewer;
 
@@ -33,6 +34,10 @@ public class customizeFilter extends AccessControlFilter {
         this(prefixUrl,null,withUserName,null);
     }
 
+    public customizeFilter(String prefixUrl,String suffixUrl,boolean withUserName){
+        this(prefixUrl,suffixUrl,withUserName,null);
+    }
+
 
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -48,6 +53,7 @@ public class customizeFilter extends AccessControlFilter {
 
            if(otherViewer!=null){
                for(String role:otherViewer){
+                   System.out.println(role);
                    isAllowed=subject.hasRole(role);
                }
            }
@@ -55,19 +61,39 @@ public class customizeFilter extends AccessControlFilter {
             String url=getPathWithinApplication(servletRequest);
 
             if(isAllowed){
-                logger.info("User "+subject.getPrincipal()+" is allow to access the document");
+                logger.info("User "+subject.getPrincipal()+", is allowed to access the document");
                 return true;
             }
             else if(withUserName){
-
-
+                if(suffixUrl!=null && !suffixUrl.isEmpty()){
+                    if(Pattern.matches(prefixUrl+userName+suffixUrl,url)){
+                        logger.info("User "+userName+", is allowed to access the document");
+                        return true;
+                    }
+                }
+                else{
+                    if(Pattern.matches(prefixUrl+userName,url)){
+                        logger.info("User "+userName+", is allowed to access the document");
+                        return true;
+                    }
+                }
             }
-            else if(Pattern.matches("/image/"+userName+"/.*",url)){
-                System.out.println("User "+userName+", is looking images");
-                return true;
+            else if(!withUserName){
+                if(suffixUrl!=null && !suffixUrl.isEmpty()){
+                    if(Pattern.matches(prefixUrl+suffixUrl,url)){
+                        logger.info("User "+userName+", is allowed to access the document");
+                        return true;
+                    }
+                }
+                else{
+                    if(Pattern.matches(prefixUrl,url)){
+                        logger.info("User "+userName+", is allowed to access the document");
+                        return true;
+                    }
+                }
             }
 
-            System.out.println("User "+userName+", has no right looking images");
+            System.out.println("User "+userName+", is not allowed to access the document");
             return false;
         }
         // 登录检测失败返货False后会进入下面的onAccessDenied()方法

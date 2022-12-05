@@ -12,4 +12,5 @@ public interface userListMapper {
     public List<userEntity> selectlistByEmail(userEntity user);
     public List<userEntity> selectListByUserNameAndEmail(userEntity user);
     public List<userEntity> selectListByUserName(userEntity user);
+    public int updateUserAvatar(userEntity user);
 }

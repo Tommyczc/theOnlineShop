@@ -22,53 +22,10 @@ import java.util.List;
 public class pathInterceptor {
 
     @Autowired
-    private userListInter userService;
-
-    @Value("${personal.EncryptionKey.aes-key}")
-    private String aesKey;
-
+    private baseInformation information;
     @RequestMapping("/personalPage")
     public String personalInformation(Model model){
-        //查询
-        userEntity user=new userEntity();
-        user.setUserName(AesUtils.encrypt(SecurityUtils.getSubject().getPrincipals().toString(),aesKey));
-        List<userEntity> userList=userService.getUserInformation(user);
-        user=userList.get(0);
-
-        //解密
-        userEntity deUser=new userEntity();
-        deUser.setUserName(SecurityUtils.getSubject().getPrincipals().toString());
-        if(user.getHeadSculpture()!=null && !user.getHeadSculpture().isEmpty()){
-            deUser.setHeadSculpture(AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
-        }
-        else{
-            //加入默认头像
-            deUser.setHeadSculpture("/image/avatar/user.png");
-        }
-
-        deUser.setEmail(AesUtils.decrypt(user.getEmail(),aesKey));
-
-        if(user.getAge()==null || user.getAge().isEmpty()){
-            deUser.setAge("no information");
-        }
-        else{
-            deUser.setAge(AesUtils.decrypt(user.getAge(),aesKey));
-        }
-
-        if(user.getAddress()==null || user.getAddress().isEmpty()){
-            deUser.setAddress("no information");
-        }
-        else{
-            deUser.setAddress(AesUtils.decrypt(user.getAddress(),aesKey));
-        }
-
-        deUser.setRegisterTime(user.getRegisterTime());
-        //转化时间格式
-        SimpleDateFormat formate=new SimpleDateFormat("yyyy-MM-dd");
-        String registerDate=formate.format(user.getRegisterTime());
-
-        model.addAttribute("user",deUser);
-        model.addAttribute("registerDate",registerDate);
+        information.getPersonalInformationLogic(model);
         return "user/personalMain";
     }
 

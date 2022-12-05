@@ -11,4 +11,5 @@ public interface userListInter {
     public boolean userNameDuplicateCheck(userEntity user);
     public boolean register(userEntity user);
     public List<userEntity> getUserInformation(userEntity user);
+    public boolean uploadAvatar(userEntity user);
 }

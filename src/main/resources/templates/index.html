@@ -36,7 +36,7 @@
             <el-row type="flex" class="row-bg" justify="center" style="height:8%;background-color: rgba(92,109,138,0.8);" align="middle">
 
                 <el-col :span="6"><div class="grid-content bg-purple">
-                    <el-avatar th:src="@{${userInformation.getHeadSculpture()}}" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; opacity: 1; text-align: center; vertical-align: middle"></el-avatar>
+                    <el-avatar fit="fill" th:src="@{${userInformation.getHeadSculpture()}}" style="margin-left: 10px;margin-right: 10px; text-align:center; line-height: 100%; opacity: 1; text-align: center; vertical-align: middle"></el-avatar>
                 </div></el-col>
 
                 <el-col :span="6" style=""><div class="grid-content bg-purple">
@@ -123,7 +123,7 @@
 
                     <el-col :span="6"><div class="grid-content" style="text-align: right;">
                         <el-dropdown >
-                            <el-avatar th:src="@{${userInformation.getHeadSculpture()}}" style="margin-right: 10px; vertical-align: middle"></el-avatar>
+                            <el-avatar fit="scale-down" th:src="@{${userInformation.getHeadSculpture()}}" style="margin-right: 10px; vertical-align: middle"></el-avatar>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item class="menuItem" th:href="@{/user/personalPage}"><i class="el-icon-user-solid"></i>Personal Page</el-dropdown-item>
                                 <el-dropdown-item><i class="el-icon-s-tools"></i>Change Password</el-dropdown-item>
