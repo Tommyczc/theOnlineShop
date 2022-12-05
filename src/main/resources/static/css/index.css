@@ -7,3 +7,6 @@
 .el-aside {
     color: #333;
 }
+.el-menu {
+    border-right:0!important;
+}

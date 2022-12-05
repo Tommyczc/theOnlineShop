@@ -22,7 +22,7 @@
 <body>
 <div id="app" style="height: 100%;width: 100%">
 <template>
-    <el-container style="height: 95%; border: 1px solid #eee; width: 100%">
+    <el-container style="height: 95%; border: 1px solid #eee; width: 100%; overflow-x: hidden;">
 <!--        导航栏-->
 
         <el-aside width="16%" style="height:100%;background-color: rgb(118, 123, 130)">
@@ -64,7 +64,7 @@
 
             <el-menu  background-color="#545c64"
                       text-color="#fff"
-                      active-text-color="#ffd04b" :default-openeds="['1', '3']">
+                      active-text-color="#ffd04b">
                 <el-menu-item index="1-1" class="menuItem" th:href="@{/system/main}"><i class="el-icon-s-home"></i>Home</el-menu-item>
 
                 <el-submenu index="2">
@@ -149,7 +149,7 @@
     </el-container>
 
     <el-container style="width: 100%; height: 5%; background-color: rgb(74,126,198)">
-        <el-footer style="vertical-align: center">
+        <el-footer align="middle">
             @Copyright: 2022
         </el-footer>
     </el-container>

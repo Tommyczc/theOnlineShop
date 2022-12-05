@@ -38,7 +38,7 @@ public class pathInterceptor {
         //解密
         userEntity deUser=new userEntity();
         deUser.setUserName(SecurityUtils.getSubject().getPrincipals().toString());
-        if(userList.get(0).getHeadSculpture()!=null){
+        if(user.getHeadSculpture()!=null || !user.getHeadSculpture().isEmpty()){
             deUser.setHeadSculpture(AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
         }
         else{

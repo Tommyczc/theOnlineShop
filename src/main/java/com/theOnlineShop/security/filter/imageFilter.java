@@ -23,6 +23,8 @@ public class imageFilter extends AccessControlFilter {
             // TODO 登录检测通过，这里可以添加一些自定义操作
             String userName=subject.getPrincipal().toString();
             boolean isAdmin=subject.hasRole("admin");
+            isAdmin=subject.hasRole("superAdmin");
+
             String url=getPathWithinApplication(servletRequest);
 
             if(isAdmin){
