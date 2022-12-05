@@ -1,5 +1,6 @@
 package com.theOnlineShop.fileStore;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ public class fileUpload {
     private fileUtils fileIo;
 
     public boolean recoverAvatar(File file){
+        String userName=SecurityUtils.getSubject().getPrincipals().toString();
         return false;
     }
 

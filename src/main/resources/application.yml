@@ -82,7 +82,6 @@ personal:
   fileStore:
 #Windows地址配置
     windowsStaticFileUrl: C:/uploadDoc/
-
 #Linux地址配置
     linuxStaticFileUrl: /usr/nessystem/staticFiles
 

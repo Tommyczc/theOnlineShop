@@ -28,9 +28,13 @@ public class fileUtils {
     }
 
 
-    public void storeFile(String path, File file){}
+    public void storeFile(String path, File file){
 
-    public void createFolder(String path){}
+    }
+
+    public void createFolder(String path){
+
+    }
 
     public String getCurrentUrl(){
         return os.getPath();
