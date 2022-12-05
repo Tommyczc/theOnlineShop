@@ -1,3 +1,4 @@
+let loading;
 var app = new Vue({
     el: '#app',
     methods: {
@@ -27,7 +28,7 @@ var app = new Vue({
         },
 
         openFullScreen() {
-            let loading=this.$loading({
+            loading=this.$loading({
                 lock: false,
                 text: 'Loading',
                 spinner: 'el-icon-loading',
@@ -40,8 +41,7 @@ var app = new Vue({
         },
 
         closeLoading(){
-            alert("closing loader");
-            let loading=this.$loading();
+            // let loading=this.$loading();
             loading.close();
         },
     },
@@ -169,19 +169,20 @@ $(function(){
     }
 
     function insertIframe(url){
-        var iframe=getMainIframe();
+        let iframe=getMainIframe();
         if(iframe==undefined){
             alert("empty iframe");
             return;
         }
         iframe.attr("data-id",url);
         iframe.attr("src",url);
-        $('.mainContent').find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(iframe);
+
+        $('.mainContent').find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(iframe.show());
 
         //加载页面
         app.openFullScreen();
         var kill = setTimeout(loadTimeOut, 5000);
-        $('.mainContent iframe:visible').on('load', function() {
+        iframe.on('load', function() {
             clearTimeout(kill);
             app.closeLoading();
         });

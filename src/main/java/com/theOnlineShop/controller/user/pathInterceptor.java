@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -61,8 +63,12 @@ public class pathInterceptor {
         }
 
         deUser.setRegisterTime(user.getRegisterTime());
+        //转化时间格式
+        SimpleDateFormat formate=new SimpleDateFormat("yyyy-MM-dd");
+        String registerDate=formate.format(user.getRegisterTime());
 
         model.addAttribute("user",deUser);
+        model.addAttribute("registerDate",registerDate);
         return "user/personalMain";
     }
 
