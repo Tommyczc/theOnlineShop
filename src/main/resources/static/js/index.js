@@ -40,6 +40,7 @@ var app = new Vue({
         },
 
         closeLoading(){
+            alert("closing loader");
             let loading=this.$loading();
             loading.close();
         },

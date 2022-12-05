@@ -19,6 +19,21 @@ public class pathController {
 
     @RequestMapping("/viewProduct")
     public String toViewProduct(){
-        return "test";
+        return "system/viewProduct";
+    }
+
+    @RequestMapping("/uploadProduct")
+    public String toUploadProduct(){
+        return "system/uploadProduct";
+    }
+
+    @RequestMapping("/purchaseHistory")
+    public String toPurchaseHistory(){
+        return "system/purchaseHistory";
+    }
+
+    @RequestMapping("/uploadHistory")
+    public String toUploadHistory(){
+        return "system/uploadHistory";
     }
 }

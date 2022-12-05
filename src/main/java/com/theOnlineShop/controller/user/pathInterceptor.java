@@ -63,11 +63,11 @@ public class pathInterceptor {
         deUser.setRegisterTime(user.getRegisterTime());
 
         model.addAttribute("user",deUser);
-        return "personalMain";
+        return "user/personalMain";
     }
 
     @RequestMapping("/changePassword")
     public String changePassword(){
-        return "changePassword";
+        return "user/changePassword";
     }
 }

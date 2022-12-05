@@ -26,7 +26,7 @@ spring:
   #数据库连接配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.1.5:3306/theonlineshop?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/theonlineshop?useUnicode=true&characterEncoding=utf-8
     username: root
     password:
   servlet:
