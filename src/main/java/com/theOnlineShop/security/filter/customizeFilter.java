@@ -53,15 +53,17 @@ public class customizeFilter extends AccessControlFilter {
 
            if(otherViewer!=null){
                for(String role:otherViewer){
-                   System.out.println(role);
-                   isAllowed=subject.hasRole(role);
+
+                   if(subject.hasRole(role)){
+                       isAllowed=true;
+                   }
                }
            }
 
             String url=getPathWithinApplication(servletRequest);
 
             if(isAllowed){
-                logger.info("User "+subject.getPrincipal()+", is allowed to access the document");
+                logger.info("Other viewer "+subject.getPrincipal()+", is allowed to access the document");
                 return true;
             }
             else if(withUserName){
@@ -93,7 +95,7 @@ public class customizeFilter extends AccessControlFilter {
                 }
             }
 
-            System.out.println("User "+userName+", is not allowed to access the document");
+            logger.warn("User "+userName+", is not allowed to access the document");
             return false;
         }
         // 登录检测失败返货False后会进入下面的onAccessDenied()方法

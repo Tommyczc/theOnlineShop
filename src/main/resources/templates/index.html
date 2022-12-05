@@ -123,7 +123,7 @@
 
                     <el-col :span="6"><div class="grid-content" style="text-align: right;">
                         <el-dropdown >
-                            <el-avatar fit="scale-down" th:src="@{${userInformation.getHeadSculpture()}}" style="margin-right: 10px; vertical-align: middle"></el-avatar>
+                            <el-avatar fit="fill" th:src="@{${userInformation.getHeadSculpture()}}" style="margin-right: 10px; vertical-align: middle"></el-avatar>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item class="menuItem" th:href="@{/user/personalPage}"><i class="el-icon-user-solid"></i>Personal Page</el-dropdown-item>
                                 <el-dropdown-item><i class="el-icon-s-tools"></i>Change Password</el-dropdown-item>
