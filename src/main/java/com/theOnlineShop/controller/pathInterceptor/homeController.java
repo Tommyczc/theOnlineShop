@@ -29,6 +29,9 @@ public class homeController {
     @Autowired
     private fileUpload fileUtils;
 
+    @Value("${personal.fileStore.mappingAddress}")
+    private String mappingAddress;
+
     @RequestMapping("/welcomePage")
     public String toWelcomePage(Model model){
         model.addAttribute("version",version);
@@ -40,7 +43,7 @@ public class homeController {
         userEntity deUser=new userEntity();
         deUser.setUserName(AesUtils.decrypt(userList.get(0).getUserName(),aesKey));
         if(userList.get(0).getHeadSculpture()!=null && !userList.get(0).getHeadSculpture().isEmpty()){
-            deUser.setHeadSculpture("/staticDocument"+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
+            deUser.setHeadSculpture(mappingAddress+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
         }
         else{
             //加入默认头像

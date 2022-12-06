@@ -59,6 +59,6 @@ public class fileUpload {
     }
 
     public String getMappingAddress(){
-        return mappingAddress;
+        return mappingAddress+"/**";
     }
 }

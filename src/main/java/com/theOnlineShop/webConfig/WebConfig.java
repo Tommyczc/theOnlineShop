@@ -18,6 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //浏览器访问路径中带有/document/时，将被映射到所设置的地址中
-        registry.addResourceHandler(mappingAddress).addResourceLocations("file:/"+os.getPath());
+        registry.addResourceHandler(mappingAddress+"/**").addResourceLocations("file:/"+os.getPath());
     }
 }

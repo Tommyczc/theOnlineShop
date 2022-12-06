@@ -28,7 +28,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/theonlineshop?useUnicode=true&characterEncoding=utf-8
     username: root
-    password:
+    password: 258000
   servlet:
     multipart:
       # 最大上传文件
@@ -83,7 +83,7 @@ personal:
     #Windows本地文件地址配置
     windowsStaticFileUrl: C:/uploadDoc/
     #Linux本地文件地址配置
-    linuxStaticFileUrl: /usr/nessystem/staticFiles
+    linuxStaticFileUrl: /usr/nessystem/staticFiles/
     #映射路径
-    mappingAddress: /staticDocument/**
+    mappingAddress: /staticDocument
 
