@@ -53,8 +53,9 @@ public class customizeFilter extends AccessControlFilter {
 
            if(otherViewer!=null){
                for(String role:otherViewer){
-                   System.out.println(role);
-                   isAllowed=subject.hasRole(role);
+                   if(subject.hasRole(role)){
+                       isAllowed=true;
+                   }
                }
            }
 
