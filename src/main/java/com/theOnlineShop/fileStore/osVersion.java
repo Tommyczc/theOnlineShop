@@ -4,8 +4,6 @@ package com.theOnlineShop.fileStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-
 @Service
 public class osVersion {
     @Value("${personal.fileStore.windowsStaticFileUrl}")
@@ -13,6 +11,7 @@ public class osVersion {
     @Value("${personal.fileStore.linuxStaticFileUrl}")
     private String linuxPath;
 
+    //纯本地文件地址
     public String getPath(){
         String os=System.getProperty("os.name");
         if(os!=null&&os.toLowerCase().startsWith("windows")){
@@ -20,6 +19,18 @@ public class osVersion {
         }
         else if(os!=null&&os.toLowerCase().startsWith("linux")){
             return linuxPath;
+        }
+        else{return null;}
+    }
+
+    //映射的本地文件地址(跟上面的函数多了文件前缀，用来表示文件协议)
+    public String getFilePath(){
+        String os=System.getProperty("os.name");
+        if(os!=null&&os.toLowerCase().startsWith("windows")){
+            return "file:"+windowPath;
+        }
+        else if(os!=null&&os.toLowerCase().startsWith("linux")){
+            return "file:"+linuxPath;
         }
         else{return null;}
     }

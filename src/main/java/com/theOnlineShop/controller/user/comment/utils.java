@@ -27,8 +27,8 @@ public class utils {
     public httpReponseEntity uploadAvatar(@RequestParam(value="avatar",required = true) MultipartFile file){
         boolean isStore=fileUtils.recoverAvatar(file);
         if(!isStore){
-
+            return new httpReponseEntity("warm","头像上传失败");
         }
-        return null;
+        return new httpReponseEntity("success","头像上传成功");
     }
 }
