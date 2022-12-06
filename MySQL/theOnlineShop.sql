@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- 主机:                           192.168.1.27
+-- 主机:                           192.168.1.5
 -- 服务器版本:                        10.4.25-MariaDB - mariadb.org binary distribution
 -- 服务器操作系统:                      Win64
 -- HeidiSQL 版本:                  12.1.0.6537
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `userlist` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `userName` (`userName`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 -- 数据导出被取消选择。
 
