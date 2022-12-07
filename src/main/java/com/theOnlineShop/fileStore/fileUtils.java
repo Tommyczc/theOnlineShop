@@ -1,12 +1,15 @@
 package com.theOnlineShop.fileStore;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.IOException;
 
 @Service
 public class fileUtils {
@@ -28,8 +31,31 @@ public class fileUtils {
     }
 
 
-    public void storeFile(String path, File file){
+    public boolean storeFile(String path, MultipartFile file, boolean isUnique){
+        try {
+            File detectPath = new File(path);
+            if(isUnique) {
+                //检测之前是否有头像存储，有就删除文件重新写入
+                if (detectPath.exists() && detectPath.isDirectory()) {
+                    FileUtils.deleteDirectory(detectPath);
+                }
 
+                detectPath.mkdirs();
+                file.transferTo(new File(path, file.getOriginalFilename()));
+            }
+            else{
+                if (!detectPath.exists() && !detectPath.isDirectory()) {
+                    detectPath.mkdirs();
+                }
+                //由于文件夹允许多个文件存在，所以文件名需要加个时间轴前缀
+                long timeMillis = System.currentTimeMillis();
+                String fileUrl=String.valueOf(timeMillis)+file.getOriginalFilename();
+                file.transferTo(new File(path, fileUrl));
+            }
+        }catch(IOException e){
+            return false;
+        }
+        return true;
     }
 
     public void createFolder(String path){

@@ -30,25 +30,20 @@ public class fileUpload {
 
     @Transactional(rollbackFor = IOException.class)
     public boolean recoverAvatar(MultipartFile file){
-        String userName=SecurityUtils.getSubject().getPrincipals().toString();
+        String userName= SecurityUtils.getSubject().getPrincipals().toString();
         String folderUrl= fileIo.getCurrentUrl()+"/"+userName+"/avatar";
         String fileName=file.getOriginalFilename();
         try {
             //检测之前是否有头像存储，有就删除文件重新写入
-            File detectPath=new File(folderUrl);
-            if(detectPath.exists() && detectPath.isDirectory()){
-                FileUtils.deleteDirectory(detectPath);
-            }
-
-            detectPath.mkdirs();
-            file.transferTo(new File(folderUrl,file.getOriginalFilename()));
+            boolean isStroed=fileIo.storeFile(folderUrl,file,true);
+            if(!isStroed){return false;}
             //上传头像记录
             userEntity user=new userEntity();
             user.setUserName(AesUtils.encrypt(userName,aesKey));
             user.setHeadSculpture(AesUtils.encrypt(fileName,aesKey));
             boolean isUpload=userList.uploadAvatar(user);
             if(!isUpload){return false;}
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
