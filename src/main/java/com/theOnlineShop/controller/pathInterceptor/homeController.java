@@ -6,6 +6,8 @@ import com.theOnlineShop.fileStore.fileUpload;
 import com.theOnlineShop.security.encryption.AesUtils;
 import com.theOnlineShop.service.userListInter;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.AesCipherService;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;

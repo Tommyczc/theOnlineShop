@@ -2,15 +2,15 @@ package com.theOnlineShop.controller.logic;
 
 import com.theOnlineShop.controller.system.domain.versionControllerDomain;
 import com.theOnlineShop.domain.emailVerificationEntity;
-import com.theOnlineShop.vo.httpReponseEntity;
 import com.theOnlineShop.domain.roleEntity;
 import com.theOnlineShop.domain.userEntity;
-import com.theOnlineShop.security.verification.emailVerification.emailUtils;
 import com.theOnlineShop.security.encryption.AesUtils;
 import com.theOnlineShop.security.encryption.Md5Utils;
+import com.theOnlineShop.security.verification.emailVerification.emailUtils;
 import com.theOnlineShop.service.emailListInter;
 import com.theOnlineShop.service.roleListInter;
 import com.theOnlineShop.service.userListInter;
+import com.theOnlineShop.vo.httpReponseEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -43,6 +43,7 @@ public class indexLogicController {
     private emailUtils emailTools;
     @Autowired
     private versionControllerDomain version;
+
 
     @RequestMapping(value=("/loginLogic"), method= RequestMethod.POST)
     public String loginLogic(userEntity user, Model model){

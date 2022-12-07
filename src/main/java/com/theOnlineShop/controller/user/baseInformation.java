@@ -4,6 +4,8 @@ import com.theOnlineShop.domain.userEntity;
 import com.theOnlineShop.security.encryption.AesUtils;
 import com.theOnlineShop.service.userListInter;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ public class baseInformation {
 
     @Value("${personal.EncryptionKey.aes-key}")
     private String aesKey;
+
+    @RequiresPermissions("sedughfrshjgvuehg")
     public Model getPersonalInformationLogic(Model model){
         //查询
         userEntity user=new userEntity();
