@@ -31,4 +31,12 @@ public class utils {
         }
         return new httpReponseEntity("success","头像上传成功");
     }
+
+    @RequestMapping(value=("/updateInformation"),method = RequestMethod.POST)
+    @ResponseBody
+    public httpReponseEntity upDateInformation(@RequestParam(value="age",required = true) String age,
+                                               @RequestParam(value="address",required = true) String address){
+        System.out.println(age+" "+address);
+        return new httpReponseEntity("success","hello");
+    }
 }

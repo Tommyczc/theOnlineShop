@@ -25,7 +25,6 @@ public class baseInformation {
     @Value("${personal.EncryptionKey.aes-key}")
     private String aesKey;
 
-    @RequiresPermissions("sedughfrshjgvuehg")
     public Model getPersonalInformationLogic(Model model){
         //查询
         userEntity user=new userEntity();

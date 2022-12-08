@@ -77,8 +77,8 @@ class UserRealm extends AuthorizingRealm {
         info.setStringPermissions(permissions);
         info.setRoles(roles);
 
-        System.out.println("roles: "+roles);
-        System.out.println("permissions: "+permissions);
+        //System.out.println("roles: "+roles);
+        //System.out.println("permissions: "+permissions);
 
         return info;
     }
