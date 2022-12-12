@@ -52,6 +52,7 @@ var app = new Vue({
                     data: formData,
                 })
                     .then(function (response) {
+                        console.log(response);
                         app.noteMessage(response['data']['messageBody'],response['data']['messageType']);
 
                     })
