@@ -28,7 +28,7 @@ public class fileUpload {
     @Value("${personal.fileStore.mappingAddress}")
     private String mappingAddress;
 
-    @Transactional(rollbackFor = IOException.class)
+    @Transactional(rollbackFor = Exception.class)
     public boolean recoverAvatar(MultipartFile file){
         String userName= SecurityUtils.getSubject().getPrincipals().toString();
         String folderUrl= fileIo.getCurrentUrl()+"/"+userName+"/avatar";
