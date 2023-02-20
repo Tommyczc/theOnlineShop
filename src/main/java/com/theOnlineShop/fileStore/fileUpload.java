@@ -4,15 +4,11 @@ import com.theOnlineShop.domain.userEntity;
 import com.theOnlineShop.security.encryption.AesUtils;
 import com.theOnlineShop.service.userListInter;
 import org.apache.shiro.SecurityUtils;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
 
 @Service
 public class fileUpload {

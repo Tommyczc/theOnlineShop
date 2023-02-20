@@ -146,7 +146,7 @@ public class indexLogicController {
         model.addAttribute("version",version);
         model.addAttribute("userEntity", new userEntity());
         //model.addAttribute("failInfo","log out success！");
-        return "login";
+        return "redirect:/login";
     }
 
 

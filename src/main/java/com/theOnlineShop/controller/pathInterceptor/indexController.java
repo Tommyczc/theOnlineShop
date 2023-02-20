@@ -13,6 +13,7 @@ public class indexController {
 
     @Autowired
     private versionControllerDomain version;
+
     @RequestMapping(value={"/login","/"})
     public String toLogin(Model model){
         model.addAttribute("version",version);
