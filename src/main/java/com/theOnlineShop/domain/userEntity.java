@@ -2,9 +2,10 @@ package com.theOnlineShop.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class userEntity {
+public class userEntity implements Serializable {
     private int id;
     private String userName;
     private String password;
