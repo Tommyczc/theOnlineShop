@@ -275,6 +275,8 @@ public class RedisUtil {
     public Object hGet(String key, String hashKey){
         return redisTemplate.opsForHash().get(key,hashKey);
     }
+
+    public void hRemove(String key, String hashKey){redisTemplate.opsForHash().delete(key,hashKey);}
     /**
      * 获取 key 下的 所有  hashkey 和 value
      *

@@ -25,7 +25,6 @@ var app = new Vue({
         },
 
         onSuccess(response, file, fileList){
-            top.location.reload();
             if(response['messageType']=="success"){
                 this.$message.success(response['messageBody'])
             }
@@ -54,7 +53,7 @@ var app = new Vue({
                     .then(function (response) {
                         console.log(response);
                         app.noteMessage(response['data']['messageBody'],response['data']['messageType']);
-
+                        top.location.reload();
                     })
                     .catch(function (error) {
                         alert(error);

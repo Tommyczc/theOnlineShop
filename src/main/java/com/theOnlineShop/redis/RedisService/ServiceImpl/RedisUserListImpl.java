@@ -22,4 +22,11 @@ public class RedisUserListImpl implements RedisUserListInter {
     public void setLoginInfo(userEntity user) {
         redisUtil.hSet("userList", user.getUserName(),user);
     }
+
+    @Override
+    public void deleteUser(userEntity user) {
+        redisUtil.delete("userList",user.getUserName());
+    }
+
+
 }

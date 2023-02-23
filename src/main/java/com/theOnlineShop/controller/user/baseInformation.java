@@ -29,14 +29,13 @@ public class baseInformation {
         //查询
         userEntity user=new userEntity();
         user.setUserName(AesUtils.encrypt(SecurityUtils.getSubject().getPrincipals().toString(),aesKey));
-        List<userEntity> userList=userService.getUserInformation(user);
-        user=userList.get(0);
+        user=userService.getUserInformation(user);
 
         //解密
         userEntity deUser=new userEntity();
         deUser.setUserName(SecurityUtils.getSubject().getPrincipals().toString());
         if(user.getHeadSculpture()!=null && !user.getHeadSculpture().isEmpty()){
-            deUser.setHeadSculpture("/staticDocument"+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
+            deUser.setHeadSculpture("/staticDocument"+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(user.getHeadSculpture(),aesKey));
         }
         else{
             //加入默认头像

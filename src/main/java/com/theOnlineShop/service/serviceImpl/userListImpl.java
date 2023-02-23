@@ -52,8 +52,6 @@ public class userListImpl implements userListInter {
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
-        }
-        finally {
             return false;
         }
     }
@@ -85,14 +83,40 @@ public class userListImpl implements userListInter {
     }
 
     @Override
-    public List<userEntity> getUserInformation(userEntity user) {
-        return userMapper.selectListByUserName(user);
+    public userEntity getUserInformation(userEntity user) {
+        userEntity theUser = null;
+        try {
+            if (redisUserListInter.getLoginInf(user.getUserName()) != null) {
+                theUser=redisUserListInter.getLoginInf(user.getUserName());
+            }
+            else{
+                theUser=userMapper.selectListByUserName(user).get(0);
+                redisUserListInter.setLoginInfo(theUser);
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return theUser;
+        //return userMapper.selectListByUserName(user);
     }
 
     @Override
     public boolean uploadAvatar(userEntity user) {
         int isUpload=userMapper.updateUserAvatar(user);
-        if(isUpload==1){return true;}
+        if(isUpload==1){
+            redisUserListInter.deleteUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateUserInformation(userEntity user) {
+        int i=userMapper.updateUserAgeAndAddress(user);
+        if(i==1){
+            redisUserListInter.deleteUser(user);
+            return true;
+        }
         return false;
     }
 }

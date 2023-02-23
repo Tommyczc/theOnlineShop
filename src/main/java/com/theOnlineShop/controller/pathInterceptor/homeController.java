@@ -40,12 +40,12 @@ public class homeController {
 
         userEntity user=new userEntity();
         user.setUserName(AesUtils.encrypt(SecurityUtils.getSubject().getPrincipals().toString(),aesKey));
-        List<userEntity> userList=userService.getUserInformation(user);
+        userEntity theUser=userService.getUserInformation(user);
         //解密
         userEntity deUser=new userEntity();
-        deUser.setUserName(AesUtils.decrypt(userList.get(0).getUserName(),aesKey));
-        if(userList.get(0).getHeadSculpture()!=null && !userList.get(0).getHeadSculpture().isEmpty()){
-            deUser.setHeadSculpture(mappingAddress+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(userList.get(0).getHeadSculpture(),aesKey));
+        deUser.setUserName(AesUtils.decrypt(theUser.getUserName(),aesKey));
+        if(theUser.getHeadSculpture()!=null && !theUser.getHeadSculpture().isEmpty()){
+            deUser.setHeadSculpture(mappingAddress+"/"+SecurityUtils.getSubject().getPrincipals().toString()+"/"+"avatar/"+AesUtils.decrypt(theUser.getHeadSculpture(),aesKey));
         }
         else{
             //加入默认头像
