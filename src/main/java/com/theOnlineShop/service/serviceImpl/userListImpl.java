@@ -25,35 +25,38 @@ public class userListImpl implements userListInter {
 
     @Override
     public boolean login(userEntity user) {
-        userEntity theUser;
+        userEntity theUser=null;
         try {
-            if (redisUserListInter.getLoginInf(user.getUserName()) != null) {
-                theUser = (userEntity) redisUserListInter.getLoginInf(user.getUserName());
-                //System.out.println("redis find a user with same user name: userName:"+theUser.getUserName()+" password:"+theUser.getPassword());
+            theUser=redisUserListInter.getLoginInf(user.getUserName());
+        }catch(Exception e){
+            System.out.println(e.hashCode());
+            //return true;
+        }
 
+        if ( theUser!= null) {
+            theUser = (userEntity) redisUserListInter.getLoginInf(user.getUserName());
+            //System.out.println("redis find a user with same user name: userName:"+theUser.getUserName()+" password:"+theUser.getPassword());
+
+            if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
+                //System.out.println("redis find user");
+                return true;
+            }
+            return false;
+        } else {
+            List<userEntity> userList = userMapper.loginByPasswordAndUserName(user);
+
+            if (userList.size() >= 1) {
+                theUser = userList.get(0);
                 if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
-                    //System.out.println("redis find user");
+                    // add the user result to redis
+                    redisUserListInter.setLoginInfo(userList.get(0));
                     return true;
                 }
-                return false;
-            } else {
-                List<userEntity> userList = userMapper.loginByPasswordAndUserName(user);
-
-                if (userList.size() >= 1) {
-                    theUser = userList.get(0);
-                    if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
-                        // add the user result to redis
-                        redisUserListInter.setLoginInfo(userList.get(0));
-                        return true;
-                    }
-                    //return false;
-                }
-                return false;
+                //return false;
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
             return false;
         }
+
     }
 
     /**

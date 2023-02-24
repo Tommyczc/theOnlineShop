@@ -1,2 +1,2 @@
 # theOnlineShop
-Online shop, by SpringMVC+shiro+mybatis+reddis
+Online shop, designed by Spring Boot+shiro+mybatis+redis+ElementUi

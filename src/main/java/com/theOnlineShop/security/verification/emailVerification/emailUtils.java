@@ -23,7 +23,7 @@ public class emailUtils {
     private String aesKey;
 
 
-    public void emailVerification(String email,String behavior){
+    public boolean emailVerification(String email,String behavior){
         String code=codeGeneration.generateVerificationCode();
         emailVerificationEntity emailEntity=new emailVerificationEntity();
         emailEntity.setEmail(AesUtils.encrypt(email,aesKey));
@@ -37,6 +37,6 @@ public class emailUtils {
             String decryCode= AesUtils.decrypt(emailExist.getCode(),aesKey);
             code=decryCode;
         }
-        emailService.sendEmailVerificationCode(email,code,behavior);
+        return emailService.sendEmailVerificationCode(email,code,behavior);
     }
 }
