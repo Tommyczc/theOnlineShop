@@ -3,8 +3,6 @@ package com.theOnlineShop.service.serviceImpl;
 import com.theOnlineShop.domain.userEntity;
 import com.theOnlineShop.mapper.userListMapper;
 import com.theOnlineShop.redis.RedisService.RedisUserListInter;
-import com.theOnlineShop.security.encryption.AesUtils;
-import com.theOnlineShop.security.encryption.Md5Utils;
 import com.theOnlineShop.service.userListInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +16,7 @@ public class userListImpl implements userListInter {
     userListMapper userMapper;
 
     @Autowired
-    RedisUserListInter redisUserListInter;
+    RedisUserListInter redisUserMapper;
 
     @Value("${personal.EncryptionKey.aes-key}")
     private String aesKey;
@@ -27,14 +25,14 @@ public class userListImpl implements userListInter {
     public boolean login(userEntity user) {
         userEntity theUser=null;
         try {
-            theUser=redisUserListInter.getLoginInf(user.getUserName());
+            theUser= redisUserMapper.getLoginInf(user.getUserName());
         }catch(Exception e){
             System.out.println(e.hashCode());
             //return true;
         }
 
         if ( theUser!= null) {
-            theUser = (userEntity) redisUserListInter.getLoginInf(user.getUserName());
+            theUser = (userEntity) redisUserMapper.getLoginInf(user.getUserName());
             //System.out.println("redis find a user with same user name: userName:"+theUser.getUserName()+" password:"+theUser.getPassword());
 
             if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
@@ -49,7 +47,7 @@ public class userListImpl implements userListInter {
                 theUser = userList.get(0);
                 if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
                     // add the user result to redis
-                    redisUserListInter.setLoginInfo(userList.get(0));
+                    redisUserMapper.setLoginInfo(userList.get(0));
                     return true;
                 }
                 //return false;
@@ -89,12 +87,12 @@ public class userListImpl implements userListInter {
     public userEntity getUserInformation(userEntity user) {
         userEntity theUser = null;
         try {
-            if (redisUserListInter.getLoginInf(user.getUserName()) != null) {
-                theUser=redisUserListInter.getLoginInf(user.getUserName());
+            if (redisUserMapper.getLoginInf(user.getUserName()) != null) {
+                theUser= redisUserMapper.getLoginInf(user.getUserName());
             }
             else{
                 theUser=userMapper.selectListByUserName(user).get(0);
-                redisUserListInter.setLoginInfo(theUser);
+                redisUserMapper.setLoginInfo(theUser);
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -107,7 +105,7 @@ public class userListImpl implements userListInter {
     public boolean uploadAvatar(userEntity user) {
         int isUpload=userMapper.updateUserAvatar(user);
         if(isUpload==1){
-            redisUserListInter.deleteUser(user);
+            redisUserMapper.deleteUser(user);
             return true;
         }
         return false;
@@ -117,9 +115,15 @@ public class userListImpl implements userListInter {
     public boolean updateUserInformation(userEntity user) {
         int i=userMapper.updateUserAgeAndAddress(user);
         if(i==1){
-            redisUserListInter.deleteUser(user);
+            redisUserMapper.deleteUser(user);
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean updateUserPassword(userEntity user) {
+        if(userMapper.updateUserPassword(user)==1){return true;}
         return false;
     }
 }

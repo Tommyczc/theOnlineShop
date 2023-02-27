@@ -13,4 +13,5 @@ public interface userListInter {
     public userEntity getUserInformation(userEntity user);
     public boolean uploadAvatar(userEntity user);
     public boolean updateUserInformation(userEntity user);
+    public boolean updateUserPassword(userEntity user);
 }

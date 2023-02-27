@@ -74,7 +74,7 @@
     </update>
 
     <update id="updateUserPassword" parameterType="com.theOnlineShop.domain.userEntity">
-        Update userlist Set age=#{age},address=#{address}
-        Where userName=#{userName}
+        Update userlist Set password=#{password}
+        Where userName=#{userName} and email=#{email}
     </update>
 </mapper>

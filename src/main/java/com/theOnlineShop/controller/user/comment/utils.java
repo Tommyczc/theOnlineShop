@@ -4,6 +4,7 @@ import com.theOnlineShop.domain.emailVerificationEntity;
 import com.theOnlineShop.domain.userEntity;
 import com.theOnlineShop.fileStore.fileUpload;
 import com.theOnlineShop.security.encryption.AesUtils;
+import com.theOnlineShop.security.encryption.Md5Utils;
 import com.theOnlineShop.security.verification.emailVerification.emailUtils;
 import com.theOnlineShop.service.emailListInter;
 import com.theOnlineShop.service.userListInter;
@@ -62,7 +63,7 @@ public class utils {
         user.setAddress(AesUtils.encrypt(address,aesKey));
         boolean isSuccess=userService.updateUserInformation(user);
         if (isSuccess){return new httpReponseEntity("success","Information Update Success");}
-        return new httpReponseEntity("warn","Information Update Fail");
+        return new httpReponseEntity("warning","Information Update Fail");
     }
 
     @RequestMapping(value=("/updatePasswordVerificationCode"),method = RequestMethod.POST)
@@ -78,7 +79,7 @@ public class utils {
             return new httpReponseEntity("success","Has send the email verification");
         }
 
-        return new httpReponseEntity("warn","Could not send verification code");
+        return new httpReponseEntity("warning","Could not send verification code");
     }
 
     @RequestMapping(value=("/passwordChange"),method = RequestMethod.POST)
@@ -87,6 +88,9 @@ public class utils {
                                             @RequestParam(value="pass",required = true) String pass,
                                             @RequestParam(value="checkPass",required = true) String checkPass){
 
+        if(!pass.equals(checkPass)){
+            return new httpReponseEntity("warning","Sorry, could not verify the code");
+        }
         emailVerificationEntity emailEntity=new emailVerificationEntity();
 
 
@@ -103,11 +107,15 @@ public class utils {
         boolean checkVeri=emailList.checkEmailVeri(emailEntity);
         if(checkVeri){
             //todo 更新密码，通过邮件和用户名
-
+            user.setPassword(Md5Utils.encrypt(pass));
+            if(userService.updateUserPassword(user)){
+                return new httpReponseEntity("success","User password update success");
+            }
+            else{
+                return new httpReponseEntity("error","User password update fail");
+            }
         }
-        else{
-            return new httpReponseEntity("warn","Sorry, could not verify the code");
-        }
-        return new httpReponseEntity("warn","Could not send");
+        
+        return new httpReponseEntity("warning","Sorry, could not verify the code");
     }
 }
