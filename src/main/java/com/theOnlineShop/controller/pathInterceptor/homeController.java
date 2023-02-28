@@ -53,6 +53,7 @@ public class homeController {
         }
 
         model.addAttribute("userInformation",deUser);
+
         //System.out.println(SecurityUtils.getSubject().getPrincipal().toString());
         return "index";
     }
