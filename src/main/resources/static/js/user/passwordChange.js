@@ -2,16 +2,12 @@ var app = new Vue({
     el: '#app',
     data() {
         var checkCode = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error('年龄不能为空'));
+            if (value=='') {
+                callback(new Error('请输入验证码'));
             }
-            // setTimeout(() => {
-            //     if (!Number.isInteger(value)) {
-            //         callback(new Error('请输入数字值'));
-            //     } else {
-            //         callback();
-            //     }
-            // }, 1000);
+            else{
+                callback();
+            }
         };
         var validatePass = (rule, value, callback) => {
             if (value === '') {
@@ -36,7 +32,7 @@ var app = new Vue({
             ruleForm: {
                 pass: '',
                 checkPass: '',
-                verificationCode: ''
+                verificationCode: '',
             },
             rules: {
                 pass: [

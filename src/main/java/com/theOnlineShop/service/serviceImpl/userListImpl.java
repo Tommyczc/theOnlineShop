@@ -32,7 +32,7 @@ public class userListImpl implements userListInter {
         }
 
         if ( theUser!= null) {
-            theUser = (userEntity) redisUserMapper.getLoginInf(user.getUserName());
+            //theUser = (userEntity) redisUserMapper.getLoginInf(user.getUserName());
             //System.out.println("redis find a user with same user name: userName:"+theUser.getUserName()+" password:"+theUser.getPassword());
 
             if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
@@ -47,7 +47,7 @@ public class userListImpl implements userListInter {
                 theUser = userList.get(0);
                 if (user.getUserName().equals(theUser.getUserName()) && user.getPassword().equals(theUser.getPassword())) {
                     // add the user result to redis
-                    redisUserMapper.setLoginInfo(userList.get(0));
+                    redisUserMapper.setLoginInfo(theUser);
                     return true;
                 }
                 //return false;
@@ -123,7 +123,10 @@ public class userListImpl implements userListInter {
 
     @Override
     public boolean updateUserPassword(userEntity user) {
-        if(userMapper.updateUserPassword(user)==1){return true;}
+        if(userMapper.updateUserPassword(user)==1){
+            redisUserMapper.deleteUser(user);
+            return true;
+        }
         return false;
     }
 }

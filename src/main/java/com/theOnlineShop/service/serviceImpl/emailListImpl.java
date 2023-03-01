@@ -29,15 +29,19 @@ public class emailListImpl implements emailListInter {
     }
 
     /**
-     * 更新邮箱验证码，redis插入，验证邮箱存在就覆盖验证码，没有就插入
+     * 更新邮箱验证码，redis插入，验证邮箱存在就返回验证码，没有就插入
      * @param email
      * @return
      */
     @Override
     public emailVerificationEntity updateEmailVeri(emailVerificationEntity email) {
+        Object objectCode=redisEmailMapper.getVerificationCode(email.getEmail());
+        if(!(objectCode ==null)){
+            email.setCode((String) objectCode);
+            return email;
+        }
         redisEmailMapper.setVerificationCode(email.getEmail(), email.getCode());
         return email;
-
     }
 
     @Override

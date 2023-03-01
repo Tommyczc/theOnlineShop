@@ -76,10 +76,10 @@ public class utils {
 
         String emailAddress=AesUtils.decrypt(user.getEmail(),aesKey);
         if(emailTools.emailVerification(emailAddress,"更换密码")){
-            return new httpReponseEntity("success","Has send the email verification");
+            return new httpReponseEntity("success","Has send the email verification, please login again.");
         }
 
-        return new httpReponseEntity("warning","Could not send verification code");
+        return new httpReponseEntity("warning","Could not send verification code.");
     }
 
     @RequestMapping(value=("/passwordChange"),method = RequestMethod.POST)
@@ -109,6 +109,7 @@ public class utils {
             //todo 更新密码，通过邮件和用户名
             user.setPassword(Md5Utils.encrypt(pass));
             if(userService.updateUserPassword(user)){
+                SecurityUtils.getSubject().logout();
                 return new httpReponseEntity("success","User password update success");
             }
             else{
