@@ -102,6 +102,15 @@
                 <a shiro:hasAnyRoles="admin,superAdmin">
                 <el-submenu index="4">
                     <template slot="title"><i class="el-icon-s-custom"></i>Admin</template>
+                    <el-menu-item-group>
+                        <template slot="title">Test</template>
+                        <el-menu-item index="4-1" class="menuItem" th:href="@{/admin/nettyDemo}">Netty</el-menu-item>
+                    </el-menu-item-group>
+
+                    <el-menu-item-group>
+                        <template slot="title">Role</template>
+                        <el-menu-item index="4-2" class="menuItem" th:href="@{/admin/roleChange}">Role Change</el-menu-item>
+                    </el-menu-item-group>
                 </el-submenu>
                 </a>
 

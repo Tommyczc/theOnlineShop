@@ -51,9 +51,11 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
-
-
-
+<!--		websocket依赖导入-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 
 <!--         thymeleaf依赖引入 -->
         <dependency>

@@ -20,13 +20,26 @@ data() {
     }
 },
 methods: {
+    noteMessage(message,type) {
+        this.$message({
+            showClose: true,
+            message:message,
+            type:type
+        });
+    },
     onSubmit() {
         console.log('submit!');
 
+        let formData=new FormData();
+        for(let key in this.form){
+            formData.append(key,this.form[key]);
+            console.log(formData.get(key));
+        }
+
         axios({
             method: 'post',
-            url: '/user/passwordChange',
-            data: this.form,
+            url: '/system/uploadProduct/upload',
+            data: formData,
         })
             .then(function (response) {
                 console.log(response);
