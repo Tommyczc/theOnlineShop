@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @Component
 @ServerEndpoint("/websocket/{name}")
-public class websocketHandler {
+public class webSocketServerHandler {
 
     /**
      * 与某个客户端的连接对话，需要通过它来给客户端发送消息
@@ -34,7 +34,7 @@ public class websocketHandler {
      * 用于存所有的连接服务的客户端，这个对象存储是安全的
      * 注意这里的kv,设计的很巧妙，v刚好是本类 WebSocket (用来存放每个客户端对应的MyWebSocket对象)
      */
-    private static ConcurrentHashMap<String,websocketHandler> webSocketSet = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, webSocketServerHandler> webSocketSet = new ConcurrentHashMap<>();
 
 
     /**
@@ -48,9 +48,8 @@ public class websocketHandler {
         this.name = name;
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(name,this);
-        log.info("[WebSocket] 连接成功，当前连接人数为：={}",webSocketSet.size());
+        log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session),webSocketSet.size());
         log.info("----------------------------------");
-        log.info("");
 
         GroupSending(name+" 来了");
     }
