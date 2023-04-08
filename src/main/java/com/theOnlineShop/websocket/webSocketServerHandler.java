@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-@ServerEndpoint("/websocket/{name}")
+@ServerEndpoint("/websocket/{account}/{pass}")
 public class webSocketServerHandler {
 
     /**
@@ -42,13 +42,14 @@ public class webSocketServerHandler {
      * session为与某个客户端的连接会话，需要通过它来给客户端发送数据
      */
     @OnOpen
-    public void OnOpen(Session session, @PathParam(value = "name") String name){
+    public void OnOpen(Session session, @PathParam(value = "account") String account, @PathParam(value = "pass") String pass){
         log.info("----------------------------------");
+        log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}",WebsocketUtil.getRemoteAddress(session).toString(),account,pass);
         this.session = session;
-        this.name = name;
+        this.name = WebsocketUtil.getRemoteAddress(session).toString();
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(name,this);
-        log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session),webSocketSet.size());
+        log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session).toString(),webSocketSet.size());
         log.info("----------------------------------");
 
         GroupSending(name+" 来了");
