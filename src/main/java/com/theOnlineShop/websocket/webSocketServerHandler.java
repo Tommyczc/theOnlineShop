@@ -44,7 +44,7 @@ public class webSocketServerHandler {
     @OnOpen
     public void OnOpen(Session session, @PathParam(value = "account") String account, @PathParam(value = "pass") String pass){
         log.info("----------------------------------");
-        log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}",WebsocketUtil.getRemoteAddress(session).toString(),account,pass);
+        log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}", WebsocketUtil.getRemoteAddress(session).toString(),account,pass);
         this.session = session;
         this.name = WebsocketUtil.getRemoteAddress(session).toString();
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
@@ -96,8 +96,7 @@ public class webSocketServerHandler {
      */
     @OnError
     public void onError(Session session, Throwable error){
-        log.info("发生错误");
-        error.printStackTrace();
+        log.info("[WebSocket] 发生错误: {}",error.getMessage());
     }
 
     /**
