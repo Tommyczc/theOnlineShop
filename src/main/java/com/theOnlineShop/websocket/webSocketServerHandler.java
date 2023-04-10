@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -28,7 +31,7 @@ public class webSocketServerHandler {
     private String name;
 
     private static ConcurrentHashMap<String, webSocketServerHandler> webSocketSet = new ConcurrentHashMap<>();
-    //public
+    private ArrayList<chipInstance> instanceList=new ArrayList<chipInstance>();
 
 
     /**
@@ -46,7 +49,7 @@ public class webSocketServerHandler {
         log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session).toString(),webSocketSet.size());
         log.info("----------------------------------");
 
-        GroupSending(name+" 来了");
+        //AppointSending(this.name,);
     }
 
     /**
@@ -56,30 +59,17 @@ public class webSocketServerHandler {
     public void OnClose(){
         webSocketSet.remove(this.name);
         log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
-
-        GroupSending(name+" 走了");
     }
 
     /**
      * 收到客户端消息后调用的方法
      */
     @OnMessage
-    public void OnMessage(String message_str){
-        log.info("[WebSocket] 收到消息：{}",message_str);
-        //判断是否需要指定发送，具体规则自定义
-        //message_str的格式
-        if(message_str.indexOf("TOUSER") == 0){
-            //取出 name和message的值
-            String[] split = message_str.split(";");
-            String[] split1 = split[0].split(":");
-            String[] split2 = split[1].split(":");
-            String name = split1[1];
-            String message = split2[1];
-            //指定发送
-            AppointSending(name,message);
-        }else{
-            //群发
-            GroupSending(message_str);
+    public void OnMessage(byte[] messages) {
+        try {
+            log.info("[WebSocket] 收到消息：{}",new String(messages,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -97,10 +87,11 @@ public class webSocketServerHandler {
      * 群发
      * @param message
      */
-    public void GroupSending(String message){
+    public void GroupSending(byte[] message){
         for (String name : webSocketSet.keySet()){
             try {
-                webSocketSet.get(name).session.getBasicRemote().sendText(message);
+                ByteBuffer buf=ByteBuffer.wrap(message);
+                webSocketSet.get(name).session.getBasicRemote().sendBinary(buf);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -112,11 +103,14 @@ public class webSocketServerHandler {
      * @param name
      * @param message
      */
-    public void AppointSending(String name,String message){
+    public void AppointSending(String name,byte[] message){
         try {
-            webSocketSet.get(name).session.getBasicRemote().sendText(message);
+            ByteBuffer buf=ByteBuffer.wrap(message);
+            webSocketSet.get(name).session.getBasicRemote().sendBinary(buf);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+    //todo a static method can get all instances information
 }
