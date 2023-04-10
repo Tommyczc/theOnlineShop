@@ -31,7 +31,7 @@ public class webSocketServerHandler {
     private String name;
 
     private static ConcurrentHashMap<String, webSocketServerHandler> webSocketSet = new ConcurrentHashMap<>();
-    private ArrayList<chipInstance> instanceList=new ArrayList<chipInstance>();
+
 
 
     /**
