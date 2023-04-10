@@ -3,7 +3,8 @@ package com.theOnlineShop.websocket.webSocketCommand.enums;
 public enum constantCommand {
 
     Update("00","update"),
-    Camera("01","camera");
+    Camera("01","camera"),
+    ResetName("02","resetName");
 
     private String order;
     private String name;

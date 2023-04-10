@@ -9,10 +9,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @ServerEndpoint 注解的作用
- *
- * @ServerEndpoint 注解是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务器端,
- * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
+ * @author Tommy
  */
 
 @Slf4j
@@ -30,11 +27,8 @@ public class webSocketServerHandler {
      */
     private String name;
 
-    /**
-     * 用于存所有的连接服务的客户端，这个对象存储是安全的
-     * 注意这里的kv,设计的很巧妙，v刚好是本类 WebSocket (用来存放每个客户端对应的MyWebSocket对象)
-     */
     private static ConcurrentHashMap<String, webSocketServerHandler> webSocketSet = new ConcurrentHashMap<>();
+    //public
 
 
     /**
@@ -73,7 +67,7 @@ public class webSocketServerHandler {
     public void OnMessage(String message_str){
         log.info("[WebSocket] 收到消息：{}",message_str);
         //判断是否需要指定发送，具体规则自定义
-        //message_str的格式 TOUSER:user2;message:aaaaaaaaaaaaaaaaaa;
+        //message_str的格式
         if(message_str.indexOf("TOUSER") == 0){
             //取出 name和message的值
             String[] split = message_str.split(";");
