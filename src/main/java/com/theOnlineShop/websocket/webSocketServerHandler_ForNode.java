@@ -6,8 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -16,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-@ServerEndpoint("/websocket/{account}/{pass}")
-public class webSocketServerHandler {
+@ServerEndpoint("/Node/{account}/{pass}")
+public class webSocketServerHandler_ForNode {
 
     /**
      * 与某个客户端的连接对话，需要通过它来给客户端发送消息
@@ -29,9 +28,9 @@ public class webSocketServerHandler {
      */
     private String name;
 
-    private static ConcurrentHashMap<String, webSocketServerHandler> webSocketSet = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, webSocketServerHandler_ForNode> webSocketSet = new ConcurrentHashMap<>();
 
-
+    private NodeInstance node;
 
     /**
      * 连接建立成功调用的方法
@@ -45,6 +44,8 @@ public class webSocketServerHandler {
         this.name = WebsocketUtil.getRemoteAddress(session).toString();
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(name,this);
+        //新建节点，节点实例可以保存每个芯片实体的状态
+        node=new NodeInstance(name);
         log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session).toString(),webSocketSet.size());
         log.info("----------------------------------");
 
@@ -64,12 +65,8 @@ public class webSocketServerHandler {
      * 收到客户端消息后调用的方法
      */
     @OnMessage
-    public void OnMessage(byte[] messages) {
-        try {
-            log.info("[WebSocket] 收到消息：{}",new String(messages,"utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+    public void OnMessage(String message) {
+        log.info("[WebSocket] 收到消息：{}",message);
     }
 
     /**
@@ -82,15 +79,19 @@ public class webSocketServerHandler {
         log.info("[WebSocket] 发生错误: {}",error.getMessage());
     }
 
+    @OnClose
+    public void onClose(){
+        webSocketSet.remove(this.name);
+    }
+
     /**
      * 群发
      * @param message
      */
-    public void GroupSending(byte[] message){
+    public static void GroupSending(String message){
         for (String name : webSocketSet.keySet()){
             try {
-                ByteBuffer buf=ByteBuffer.wrap(message);
-                webSocketSet.get(name).session.getBasicRemote().sendBinary(buf);
+                webSocketSet.get(name).session.getBasicRemote().sendText(message);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -102,14 +103,20 @@ public class webSocketServerHandler {
      * @param name
      * @param message
      */
-    public void AppointSending(String name,byte[] message){
+    public static void AppointSending(String name,String message){
         try {
-            ByteBuffer buf=ByteBuffer.wrap(message);
-            webSocketSet.get(name).session.getBasicRemote().sendBinary(buf);
+            webSocketSet.get(name).session.getBasicRemote().sendText(message);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    //todo a static method can get all instances information
+    //todo a static method can get all node instances information
+    public static ArrayList<NodeInstance> getAllNode(){
+        ArrayList<NodeInstance> instanceList=new ArrayList<>();
+        for(webSocketServerHandler_ForNode handler:webSocketSet.values()){
+            instanceList.add(handler.node);
+        }
+        return instanceList;
+    }
 }
