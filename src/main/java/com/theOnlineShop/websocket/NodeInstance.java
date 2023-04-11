@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class NodeInstance {
     public String address;
-    public ArrayList<chipInstance> instanceList;
+    public ArrayList<chipInstance> chipInstanceList;
 
-    public NodeInstance(String address, ArrayList<chipInstance> instanceList) {
+    public NodeInstance(String address) {
         this.address = address;
-        this.instanceList = instanceList;
+        this.chipInstanceList = new ArrayList<chipInstance>();
     }
 
     public String getAddress() {
@@ -19,11 +19,11 @@ public class NodeInstance {
         this.address = address;
     }
 
-    public ArrayList<chipInstance> getInstanceList() {
-        return instanceList;
+    public ArrayList<chipInstance> getChipInstanceList() {
+        return chipInstanceList;
     }
 
-    public void setInstanceList(ArrayList<chipInstance> instanceList) {
-        this.instanceList = instanceList;
+    public void setChipInstanceList(ArrayList<chipInstance> chipInstanceList) {
+        this.chipInstanceList = chipInstanceList;
     }
 }
