@@ -18,7 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 @Slf4j
-//@ConditionalOnClass(value = WebSocketConfig.class)
 @Component
 @ServerEndpoint("/Node/{account}/{pass}")
 public class webSocketServerHandler_ForNode {
