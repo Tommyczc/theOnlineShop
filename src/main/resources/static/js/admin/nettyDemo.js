@@ -10,7 +10,7 @@ var app = new Vue({
 
         initWebSocket() {
             //初始化weosocket
-            const wsuri = "wss://xxxxxxx/xx/xx/" + this.roomId;
+            const wsuri = "ws://127.0.0.1:8082/Web/tommy";
             this.websock = new WebSocket(wsuri);
             // 客户端接收服务端数据时触发
             this.websock.onmessage = this.websocketonmessage;
@@ -23,11 +23,21 @@ var app = new Vue({
         },
         requestConnectionDetail(){
 
+            axios({
+                method: 'post',
+                url: '/admin/getSocketConnection',
+                //data: formData,
+            })
+                .then(function (response) {
+                    console.log("this is the response: -----\n"+JSON.stringify(response));
+                    return "/tommy";
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
         },
         // 连接建立时触发
         websocketonopen() {
-            //开启心跳
-            this.start();
             //连接建立之后执行send方法发送数据
             // let actions = {"room":"007854ce7b93476487c7ca8826d17eba","info":"1121212"};
             // this.websocketsend(JSON.stringify(actions));
@@ -40,8 +50,6 @@ var app = new Vue({
         // 客户端接收服务端数据时触发
         websocketonmessage(e) {
             console.log(e.data);
-            //收到服务器信息，心跳重置
-            this.reset();
         },
         websocketsend(Data) {
             //数据发送
@@ -51,8 +59,6 @@ var app = new Vue({
         websocketclose(e) {
             //关闭
             console.log("断开连接", e);
-            //重连
-            this.reconnect();
         },
         reconnect() {
             //重新连接

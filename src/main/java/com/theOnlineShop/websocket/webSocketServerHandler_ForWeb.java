@@ -1,8 +1,10 @@
 package com.theOnlineShop.websocket;
 
 import com.alibaba.fastjson.JSONObject;
+import com.theOnlineShop.webConfig.WebSocketConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -11,6 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
+//@ConditionalOnClass(value = WebSocketConfig.class)
 @Component
 @ServerEndpoint("/Web/{account}")
 public class webSocketServerHandler_ForWeb {

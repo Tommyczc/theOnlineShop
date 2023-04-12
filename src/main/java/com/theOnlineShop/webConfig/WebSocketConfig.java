@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-@ConditionalOnProperty(name = "spring.profiles.active", havingValue = "dev")
+//@ConditionalOnProperty(name = "spring.profiles.active", havingValue = "dev")
 @Configuration
 public class WebSocketConfig {
 
