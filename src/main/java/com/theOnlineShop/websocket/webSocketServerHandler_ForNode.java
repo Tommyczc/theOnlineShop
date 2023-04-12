@@ -1,6 +1,10 @@
 package com.theOnlineShop.websocket;
 
+import com.alibaba.fastjson.JSONObject;
+import com.theOnlineShop.webConfig.WebSocketConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -14,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 @Slf4j
+//@ConditionalOnClass(value = WebSocketConfig.class)
 @Component
 @ServerEndpoint("/Node/{account}/{pass}")
 public class webSocketServerHandler_ForNode {
@@ -49,7 +54,7 @@ public class webSocketServerHandler_ForNode {
         log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session).toString(),webSocketSet.size());
         log.info("----------------------------------");
 
-        //AppointSending(this.name,);
+
     }
 
     /**
