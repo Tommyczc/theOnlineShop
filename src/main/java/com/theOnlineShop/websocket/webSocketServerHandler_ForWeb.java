@@ -33,7 +33,8 @@ public class webSocketServerHandler_ForWeb {
 
     @OnOpen
     public void OnOpen(Session session,@PathParam(value = "account") String account){
-        log.info("[webSocket] a new connection, session id: {}\ncurrent shiro session id: {}",session.getId(), SecurityUtils.getSubject().getSession().getId());
+        log.info("----------------------------------");
+        log.info("[webSocket] a new connection, session id: {}, ip: {}",session.getId(),WebsocketUtil.getRemoteAddress(session).toString());
         this.name=account;
         this.session=session;
         webSocketSet.put(account,this);
@@ -43,6 +44,7 @@ public class webSocketServerHandler_ForWeb {
         js.put("msg",webSocketServerHandler_ForNode.getAllNode());
         js.put("onlineNumber",webSocketSet.size());
         AppointSending(this.name,js.toJSONString());
+        log.info("----------------------------------");
     }
 
     /**
@@ -67,10 +69,6 @@ public class webSocketServerHandler_ForWeb {
         log.info("[WebSocket] 发生错误: {}",error.getMessage());
     }
 
-    @OnClose
-    public void onClose(){
-        webSocketSet.remove(this.name);
-    }
 
     public static void AppointSending(String name,String message){
         try {

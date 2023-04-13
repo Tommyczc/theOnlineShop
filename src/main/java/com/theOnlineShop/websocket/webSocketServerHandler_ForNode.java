@@ -1,8 +1,6 @@
 package com.theOnlineShop.websocket;
 
-import com.theOnlineShop.webConfig.WebSocketConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -51,8 +49,6 @@ public class webSocketServerHandler_ForNode {
         node=new NodeInstance(name);
         log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session).toString(),webSocketSet.size());
         log.info("----------------------------------");
-
-
     }
 
     /**
@@ -80,11 +76,6 @@ public class webSocketServerHandler_ForNode {
     @OnError
     public void onError(Session session, Throwable error){
         log.info("[WebSocket] 发生错误: {}",error.getMessage());
-    }
-
-    @OnClose
-    public void onClose(){
-        webSocketSet.remove(this.name);
     }
 
     /**

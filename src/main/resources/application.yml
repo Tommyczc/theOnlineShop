@@ -12,6 +12,10 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
+  servlet:
+    session:
+      persistent: false
+
 spring:
   #thymeleaf配置
   thymeleaf:

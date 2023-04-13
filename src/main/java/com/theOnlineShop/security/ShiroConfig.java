@@ -3,6 +3,7 @@ package com.theOnlineShop.security;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.theOnlineShop.security.filter.customizeFilter;
 import com.theOnlineShop.security.filter.imageFilter;
+import com.theOnlineShop.security.filter.webSocketFilter;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -21,10 +22,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.servlet.Filter;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Configuration
 public class ShiroConfig {
@@ -39,11 +37,18 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         Map<String, Filter> filterObjMap = new LinkedHashMap<>();
-        filterObjMap.put("imageFilter", new imageFilter()); //匿名访问静态资源
+        //匿名访问静态资源
+        //filterObjMap.put("imageFilter", new imageFilter());
         Set<String> other=new HashSet<>();
         other.add("admin");
         other.add("superAdmin");
         filterObjMap.put("customizeFilter",new customizeFilter("/staticDocument/","/.*",true,other));
+
+        //对websocket的url进行限制，只允许当前登录的管理员用户连接
+        ArrayList adminRoles=new ArrayList<>();
+        adminRoles.add("admin");
+        adminRoles.add("superAdmin");
+        filterObjMap.put("webSocketFilter",new webSocketFilter("/Web/",adminRoles));
         shiroFilterFactoryBean.setFilters(filterObjMap);
 
         //Shiro是通过SecurityManager来管理整个认证和授权流程的，这个SecurityManager可以在下面初始化
@@ -62,6 +67,7 @@ public class ShiroConfig {
         filterMap.put("/theOnlineShop/**","authc");
         //filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
         filterMap.put("/staticDocument/**","customizeFilter");
+        filterMap.put("/Web/**","webSocketFilter");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         //配置登录页
