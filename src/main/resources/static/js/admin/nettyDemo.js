@@ -10,7 +10,7 @@ var app = new Vue({
 
         initWebSocket() {
             //初始化weosocket
-            const wsuri = "ws://127.0.0.1:8082/Web/tommy";
+            const wsuri = "ws://127.0.0.1:8082/Web/"+JSON.stringify(this.requestConnectionDetail());
             this.websock = new WebSocket(wsuri);
             // 客户端接收服务端数据时触发
             this.websock.onmessage = this.websocketonmessage;
@@ -30,10 +30,17 @@ var app = new Vue({
             })
                 .then(function (response) {
                     console.log("this is the response: -----\n"+JSON.stringify(response));
-                    return "/tommy";
+                    if(response.data.SocketConnection=="allow"){
+                        console.log(response.data.userName)
+                        return response.data.userName;
+                    }
+                    else{
+                        return undefined;
+                    }
                 })
                 .catch(function (error) {
                     alert(error);
+                    return undefined;
                 });
         },
         // 连接建立时触发

@@ -1,10 +1,7 @@
 package com.theOnlineShop.websocket;
 
 import com.alibaba.fastjson.JSONObject;
-import com.theOnlineShop.webConfig.WebSocketConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;

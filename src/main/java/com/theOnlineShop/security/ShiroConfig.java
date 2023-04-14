@@ -45,10 +45,10 @@ public class ShiroConfig {
         filterObjMap.put("customizeFilter",new customizeFilter("/staticDocument/","/.*",true,other));
 
         //对websocket的url进行限制，只允许当前登录的管理员用户连接
-        ArrayList adminRoles=new ArrayList<>();
-        adminRoles.add("admin");
-        adminRoles.add("superAdmin");
-        filterObjMap.put("webSocketFilter",new webSocketFilter("/Web/",adminRoles));
+//        ArrayList adminRoles=new ArrayList<>();
+//        adminRoles.add("admin");
+//        adminRoles.add("superAdmin");
+//        filterObjMap.put("webSocketFilter",new webSocketFilter("/Web/",adminRoles));
         shiroFilterFactoryBean.setFilters(filterObjMap);
 
         //Shiro是通过SecurityManager来管理整个认证和授权流程的，这个SecurityManager可以在下面初始化
@@ -67,7 +67,7 @@ public class ShiroConfig {
         filterMap.put("/theOnlineShop/**","authc");
         //filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
         filterMap.put("/staticDocument/**","customizeFilter");
-        filterMap.put("/Web/**","webSocketFilter");
+        filterMap.put("/Web/**","roles[admin]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         //配置登录页

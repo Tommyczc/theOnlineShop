@@ -24,7 +24,8 @@ public class webSocketFilter extends AccessControlFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
-        Subject subject = SecurityUtils.getSubject();
+        System.out.println(o);
+        Subject subject = getSubject(servletRequest, servletResponse);
         String url=getPathWithinApplication(servletRequest);
         boolean isAdmin=false;
         for(String role:allowRoles){
@@ -33,7 +34,7 @@ public class webSocketFilter extends AccessControlFilter {
                 break;
             }
         }
-
+        logger.info("authenticated: {}",subject.isAuthenticated());
         if (subject != null && subject.isAuthenticated()) {
             String userName=subject.getPrincipal().toString();
             if (Pattern.matches(prefixUrl + userName, url) && isAdmin) {
@@ -46,8 +47,11 @@ public class webSocketFilter extends AccessControlFilter {
                 return false;
             }
         }
-        else{
+        else if(!subject.isAuthenticated()){
             logger.warn("User is not authenticated");
+        }
+        else if(subject == null){
+            logger.warn("User object is null");
         }
 
         return false;
