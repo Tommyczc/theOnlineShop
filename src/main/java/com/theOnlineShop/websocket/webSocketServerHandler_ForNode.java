@@ -1,5 +1,6 @@
 package com.theOnlineShop.websocket;
 
+import com.theOnlineShop.webConfig.WebSocketIPSearchConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +8,7 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -16,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 //@ConditionalOnClass(value = WebSocketConfig.class)
 @Component
-@ServerEndpoint("/Node/{account}/{pass}")
+@ServerEndpoint(value="/Node/{account}/{pass}")
 public class webSocketServerHandler_ForNode {
 
     /**
@@ -27,7 +29,9 @@ public class webSocketServerHandler_ForNode {
     /**
      * 标识当前连接客户端的用户名
      */
-    private String name;
+    private String address;
+
+    private String register;
 
     private static ConcurrentHashMap<String, webSocketServerHandler_ForNode> webSocketSet = new ConcurrentHashMap<>();
 
@@ -40,14 +44,15 @@ public class webSocketServerHandler_ForNode {
     @OnOpen
     public void OnOpen(Session session, @PathParam(value = "account") String account, @PathParam(value = "pass") String pass){
         log.info("----------------------------------");
-        log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}", WebsocketUtil.getRemoteAddress(session).toString(),account,pass);
+        this.address=WebsocketUtil.getRemoteAddress(session).toString();
         this.session = session;
-        this.name = WebsocketUtil.getRemoteAddress(session).toString();
+        this.register=account;
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
-        webSocketSet.put(name,this);
+        webSocketSet.put(address,this);
         //新建节点，节点实例可以保存每个芯片实体的状态
-        node=new NodeInstance(name);
-        log.info("[WebSocket] 连接成功, 当前socket ip:{}, 当前连接人数为:={}",WebsocketUtil.getRemoteAddress(session).toString(),webSocketSet.size());
+        node=new NodeInstance(address);
+        log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}", address,account,pass);
+        log.info("[WebSocket] 连接成功, 当前连接人数为:={}",webSocketSet.size());
         log.info("----------------------------------");
     }
 
@@ -56,7 +61,7 @@ public class webSocketServerHandler_ForNode {
      */
     @OnClose
     public void OnClose(){
-        webSocketSet.remove(this.name);
+        webSocketSet.remove(this.address);
         log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
     }
 

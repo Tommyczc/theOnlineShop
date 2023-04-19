@@ -10,7 +10,6 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-//@ConditionalOnClass(value = WebSocketConfig.class)
 @Component
 @ServerEndpoint("/Web/{account}")
 public class webSocketServerHandler_ForWeb {
@@ -31,10 +30,16 @@ public class webSocketServerHandler_ForWeb {
     @OnOpen
     public void OnOpen(Session session,@PathParam(value = "account") String account){
         log.info("----------------------------------");
-        log.info("[webSocket] a new connection, session id: {}, ip: {}",session.getId(),WebsocketUtil.getRemoteAddress(session).toString());
         this.name=account;
         this.session=session;
         webSocketSet.put(account,this);
+
+        log.info(
+                "[webSocket] a new connection, session id: {}, ip: {}, current num of online: {}",
+                session.getId(),
+                WebsocketUtil.getRemoteAddress(session).toString(),
+                webSocketSet.size()
+        );
 
         JSONObject js=new JSONObject();
         js.put("order","update");

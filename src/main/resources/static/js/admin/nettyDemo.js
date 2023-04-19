@@ -8,9 +8,10 @@ var app = new Vue({
     },
     methods:{
 
-        initWebSocket() {
+        async initWebSocket() {
+            const userInformation= await this.requestConnectionDetail();
             //初始化weosocket
-            const wsuri = "ws://127.0.0.1:8082/Web/"+JSON.stringify(this.requestConnectionDetail());
+            const wsuri = "ws://"+this.url+"/Web/"+userInformation;
             this.websock = new WebSocket(wsuri);
             // 客户端接收服务端数据时触发
             this.websock.onmessage = this.websocketonmessage;
@@ -22,29 +23,31 @@ var app = new Vue({
             this.websock.onclose = this.websocketclose;
         },
         requestConnectionDetail(){
-
-            axios({
-                method: 'post',
-                url: '/admin/getSocketConnection',
-                //data: formData,
-            })
-                .then(function (response) {
-                    console.log("this is the response: -----\n"+JSON.stringify(response));
-                    if(response.data.SocketConnection=="allow"){
-                        console.log(response.data.userName)
-                        return response.data.userName;
-                    }
-                    else{
-                        return undefined;
-                    }
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'post',
+                    url: '/admin/getSocketConnection',
+                    //data: formData,
                 })
-                .catch(function (error) {
-                    alert(error);
-                    return undefined;
-                });
+                    .then(function (response) {
+                        console.log("this is the response: -----\n" + JSON.stringify(response));
+                        if (response.data.SocketConnection.normalize() == "allow".normalize()) {
+                            console.log("Find user connection detail: ", response.data.userName);
+                            resolve(response.data.userName);
+                        } else {
+                            console.log("Cannot find user name");
+                            reject(undefined);
+                        }
+                    })
+                    .catch(function (error) {
+                        //alert(error);
+                        reject(error);
+                    });
+            })
         },
         // 连接建立时触发
         websocketonopen() {
+            console.log("WebSocket Connected")
             //连接建立之后执行send方法发送数据
             // let actions = {"room":"007854ce7b93476487c7ca8826d17eba","info":"1121212"};
             // this.websocketsend(JSON.stringify(actions));
@@ -95,6 +98,7 @@ var app = new Vue({
     },
     data(){
         return{
+            url:"192.168.4.159:8082",
             tableData: [{
                 id: 1,
                 date: '2016-05-02',

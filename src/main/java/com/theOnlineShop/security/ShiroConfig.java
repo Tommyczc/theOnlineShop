@@ -2,8 +2,6 @@ package com.theOnlineShop.security;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.theOnlineShop.security.filter.customizeFilter;
-import com.theOnlineShop.security.filter.imageFilter;
-import com.theOnlineShop.security.filter.webSocketFilter;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -22,7 +20,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.servlet.Filter;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Configuration
 public class ShiroConfig {
@@ -67,7 +68,7 @@ public class ShiroConfig {
         filterMap.put("/theOnlineShop/**","authc");
         //filterMap.put("/image/**", "imageFilter"); //匿名访问静态资源
         filterMap.put("/staticDocument/**","customizeFilter");
-        filterMap.put("/Web/**","roles[admin]");
+        //filterMap.put("/Web/**","roles[admin]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         //配置登录页
