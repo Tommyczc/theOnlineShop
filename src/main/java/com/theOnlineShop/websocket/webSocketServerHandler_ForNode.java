@@ -1,13 +1,16 @@
 package com.theOnlineShop.websocket;
 
 import com.theOnlineShop.webConfig.WebSocketIPSearchConfig;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,6 +36,8 @@ public class webSocketServerHandler_ForNode {
 
     private String register;
 
+    private String date;
+
     private static ConcurrentHashMap<String, webSocketServerHandler_ForNode> webSocketSet = new ConcurrentHashMap<>();
 
     private NodeInstance node;
@@ -47,6 +52,9 @@ public class webSocketServerHandler_ForNode {
         this.address=WebsocketUtil.getRemoteAddress(session).toString();
         this.session = session;
         this.register=account;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        this.date=formatter.format(date);
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(address,this);
         //新建节点，节点实例可以保存每个芯片实体的状态

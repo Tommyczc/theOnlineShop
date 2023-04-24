@@ -1,5 +1,6 @@
 package com.theOnlineShop.controller.admin.comment;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -12,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 @Slf4j
@@ -30,6 +35,11 @@ public class netty {
     void Init(){
         netty.localIp=getLocalAddress();
         netty.port=environment.getProperty("server.port");
+
+        log.info("*****************");
+        log.info("Current V4IP: {}", localIp);
+        log.info("Current Port: {}",port);
+        log.info("*****************");
     }
 
     @RequestMapping("/admin/getSocketConnection")
@@ -44,31 +54,26 @@ public class netty {
         return js;
     }
 
-//    public static String getV4IP(){
-//        String ip = "http://pv.sohu.com/cityjson?ie=utf-8";
-//        String inputLine = "";
-//        String read = "";
-//        String toIp="";
-//        try {
-//            URL url = new URL(ip);
-//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//            while ((read = in.readLine()) != null) {
-//                inputLine += read;
-//            }
-//            String ObjJson=inputLine.substring(inputLine.indexOf("=")+1,inputLine.length()-1);
-//            JSONObject jsonObj= JSON.parseObject(ObjJson);
-//            toIp=jsonObj.getString("cip");
-//        } catch (Exception e) {
-//            toIp="";
-//            log.error("------------------异常信息{}",e);
-//        }
-//        log.info("-------------------------{}",toIp);
-////        if(ip.equals(toIp)){
-////            return toIp;
-////        }
-//        return toIp;
-//    }
+    public static String getV4IP(){
+        String ip = "http://pv.sohu.com/cityjson?ie=utf-8";
+        String inputLine = "";
+        String read = "";
+        String toIp = "";
+        try {
+            URL url = new URL(ip);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            while ((read = in.readLine()) != null) {
+                inputLine += read;
+            }
+            String ObjJson = inputLine.substring(inputLine.indexOf("=") + 1, inputLine.length() - 1);
+            JSONObject jsonObj = JSON.parseObject(ObjJson);
+            toIp = jsonObj.getString("cip");
+        } catch (Exception e) {
+            toIp = "";
+        }
+        return toIp;
+    }
 
     public static String getLocalAddress(){
         String ip = "";

@@ -1,9 +1,12 @@
 var app = new Vue({
     el: '#app',
     created() {
+        console.log("web socket is opening");
         this.initWebSocket();
     },
-    destroyed() {
+    beforeDestroy() {
+        console.log("web socket is closing");
+        alert("goodbye");
         this.websock.close(); //离开路由之后断开websocket连接
     },
     methods:{
@@ -64,6 +67,9 @@ var app = new Vue({
         // 客户端接收服务端数据时触发
         websocketonmessage(e) {
             console.log(e.data);
+            const jsonObject=JSON.parse(e.data);
+            this.tableData=jsonObject.msg;
+            this.watching=jsonObject.onlineNumber;
         },
         websocketsend(Data) {
             //数据发送
@@ -145,8 +151,9 @@ var app = new Vue({
                 node: '165.35.435.234',
                 numOdInstance:0,
                 status:'connected'
-            }]
-
+            }],
+            watching:0,
+            websock:null
         }
     }
 });
