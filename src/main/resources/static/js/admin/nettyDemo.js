@@ -10,8 +10,11 @@ var app = new Vue({
 
         async initWebSocket() {
             const userInformation= await this.requestConnectionDetail();
+            if(userInformation.userName===undefined){
+                return;
+            }
             //初始化weosocket
-            const wsuri = "ws://"+this.url+"/Web/"+userInformation;
+            const wsuri = "ws://"+userInformation.ip+":"+userInformation.port+"/Web/"+userInformation.userName;
             this.websock = new WebSocket(wsuri);
             // 客户端接收服务端数据时触发
             this.websock.onmessage = this.websocketonmessage;
@@ -33,7 +36,8 @@ var app = new Vue({
                         console.log("this is the response: -----\n" + JSON.stringify(response));
                         if (response.data.SocketConnection.normalize() == "allow".normalize()) {
                             console.log("Find user connection detail: ", response.data.userName);
-                            resolve(response.data.userName);
+                            const finalData={userName:response.data.userName,ip:response.data.ip,port:response.data.port}
+                            resolve(finalData);
                         } else {
                             console.log("Cannot find user name");
                             reject(undefined);
@@ -41,7 +45,7 @@ var app = new Vue({
                     })
                     .catch(function (error) {
                         //alert(error);
-                        reject(error);
+                        reject(undefined);
                     });
             })
         },
@@ -98,7 +102,6 @@ var app = new Vue({
     },
     data(){
         return{
-            url:"192.168.4.159:8082",
             tableData: [{
                 id: 1,
                 date: '2016-05-02',

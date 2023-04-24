@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -24,6 +25,8 @@ public class webSocketServerHandler_ForWeb {
      */
     private String name;
 
+    private String ip;
+
     private static ConcurrentHashMap<String, webSocketServerHandler_ForWeb> webSocketSet = new ConcurrentHashMap<>();
 
 
@@ -32,7 +35,8 @@ public class webSocketServerHandler_ForWeb {
         log.info("----------------------------------");
         this.name=account;
         this.session=session;
-        webSocketSet.put(account,this);
+        this.ip=WebsocketUtil.getRemoteAddress(session).toString();
+        webSocketSet.put(Objects.requireNonNull(WebsocketUtil.getRemoteAddress(session)).toString(),this);
 
         log.info(
                 "[webSocket] a new connection, session id: {}, ip: {}, current num of online: {}",
@@ -45,7 +49,7 @@ public class webSocketServerHandler_ForWeb {
         js.put("order","update");
         js.put("msg",webSocketServerHandler_ForNode.getAllNode());
         js.put("onlineNumber",webSocketSet.size());
-        AppointSending(this.name,js.toJSONString());
+        AppointSending(this.ip,js.toJSONString());
         log.info("----------------------------------");
     }
 
