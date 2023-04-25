@@ -4,10 +4,17 @@ var app = new Vue({
         console.log("web socket is opening");
         this.initWebSocket();
     },
-    beforeDestroy() {
+    destroyed() {
         console.log("web socket is closing");
-        alert("goodbye");
         this.websock.close(); //离开路由之后断开websocket连接
+    },
+
+    mounted() {        //写在mounted或者activated生命周期内即可
+        window.onbeforeunload = e => {
+            console.log("web socket is closing");
+            this.websock.close();
+            return ''
+        };
     },
     methods:{
 
@@ -68,7 +75,8 @@ var app = new Vue({
         websocketonmessage(e) {
             console.log(e.data);
             const jsonObject=JSON.parse(e.data);
-            this.tableData=jsonObject.msg;
+            this.messageHandler(jsonObject.msg);
+
             this.watching=jsonObject.onlineNumber;
         },
         websocketsend(Data) {
@@ -104,6 +112,10 @@ var app = new Vue({
         //     //重启心跳
         //     that.start();
         // },
+        messageHandler(msg){
+            console.log(msg);
+            this.tableData=msg;
+        }
 
     },
     data(){

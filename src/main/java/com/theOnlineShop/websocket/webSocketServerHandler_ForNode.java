@@ -1,10 +1,10 @@
 package com.theOnlineShop.websocket;
 
-import com.theOnlineShop.webConfig.WebSocketIPSearchConfig;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -42,6 +42,16 @@ public class webSocketServerHandler_ForNode {
 
     private NodeInstance node;
 
+    @PostConstruct
+    void init(){
+        //todo test node instance
+        node=new NodeInstance("192.4.4.5");
+        chipInstance chipA=new chipInstance("tommy","127.0.0.4");
+        chipInstance chipB=new chipInstance("tony","127.0.1.34");
+        node.chipInstanceList.add(chipA);
+        node.chipInstanceList.add(chipB);
+    }
+
     /**
      * 连接建立成功调用的方法
      * session为与某个客户端的连接会话，需要通过它来给客户端发送数据
@@ -58,7 +68,7 @@ public class webSocketServerHandler_ForNode {
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(address,this);
         //新建节点，节点实例可以保存每个芯片实体的状态
-        node=new NodeInstance(address);
+        //node=new NodeInstance(address);
         log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}", address,account,pass);
         log.info("[WebSocket] 连接成功, 当前连接人数为:={}",webSocketSet.size());
         log.info("----------------------------------");

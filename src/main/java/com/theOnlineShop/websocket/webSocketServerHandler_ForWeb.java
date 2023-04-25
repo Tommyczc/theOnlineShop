@@ -58,7 +58,7 @@ public class webSocketServerHandler_ForWeb {
      */
     @OnClose
     public void OnClose(){
-        webSocketSet.remove(this.name);
+        webSocketSet.remove(this.ip);
         log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
     }
 
@@ -68,6 +68,7 @@ public class webSocketServerHandler_ForWeb {
     @OnMessage
     public void OnMessage(String message) {
         log.info("[WebSocket] 收到消息：{}",message);
+        JSONObject theObject=JSONObject.parseObject(message);
     }
 
     @OnError
