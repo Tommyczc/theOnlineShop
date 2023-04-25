@@ -39,7 +39,7 @@ public class webSocketServerHandler_ForWeb {
         webSocketSet.put(Objects.requireNonNull(WebsocketUtil.getRemoteAddress(session)).toString(),this);
 
         log.info(
-                "[webSocket] a new connection, session id: {}, ip: {}, current num of online: {}",
+                "[WebSocket Web] a new connection, session id: {}, ip: {}, current num of online: {}",
                 session.getId(),
                 WebsocketUtil.getRemoteAddress(session).toString(),
                 webSocketSet.size()
@@ -59,7 +59,7 @@ public class webSocketServerHandler_ForWeb {
     @OnClose
     public void OnClose(){
         webSocketSet.remove(this.ip);
-        log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
+        log.info("[WebSocket Web] 退出成功，当前连接人数为：={}",webSocketSet.size());
     }
 
     /**
@@ -67,13 +67,13 @@ public class webSocketServerHandler_ForWeb {
      */
     @OnMessage
     public void OnMessage(String message) {
-        log.info("[WebSocket] 收到消息：{}",message);
+        log.info("[WebSocket Web] 收到消息：{}",message);
         JSONObject theObject=JSONObject.parseObject(message);
     }
 
     @OnError
     public void onError(Session session, Throwable error){
-        log.info("[WebSocket] 发生错误: {}",error.getMessage());
+        log.info("[WebSocket Web] 发生错误: {}",error.getMessage());
     }
 
 

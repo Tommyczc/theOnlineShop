@@ -1,5 +1,6 @@
 var app = new Vue({
     el: '#app',
+
     created() {
         console.log("web socket is opening");
         this.initWebSocket();
@@ -75,8 +76,8 @@ var app = new Vue({
         websocketonmessage(e) {
             console.log(e.data);
             const jsonObject=JSON.parse(e.data);
-            this.messageHandler(jsonObject.msg);
 
+            this.messageHandler(jsonObject.msg);
             this.watching=jsonObject.onlineNumber;
         },
         websocketsend(Data) {
@@ -113,10 +114,55 @@ var app = new Vue({
         //     that.start();
         // },
         messageHandler(msg){
-            console.log(msg);
-            this.tableData=msg;
-        }
+            const jsonObject=JSON.stringify(msg);
+            const finalList=[];
+            console.log("this is msg object------------------------"+jsonObject);
+            for(node in msg){
+                const nodeInstance={};
+                for(element in msg[node]){
+                    nodeInstance['id']=finalList.length+1;
+                    if(element=="address") {
+                        nodeInstance['node'] =msg[node][element];
+                    }
+                    else if(element=="registerTime"){
+                        nodeInstance['date'] =msg[node][element];
+                    }
+                    else if(element=="registerName"){
+                        nodeInstance['account'] =msg[node][element];
+                    }
+                }
+                if(msg[node].hasOwnProperty ("chipInstanceList")){
+                    nodeInstance['numOdInstance']=msg[node]["chipInstanceList"].length;
+                    childrenList=[];
+                    for(childChipInstance in msg[node]["chipInstanceList"]){
+                        console.log("child chip --------------------"+JSON.stringify(msg[node]["chipInstanceList"][childChipInstance]));
+                        chipObject={};
+                        chipObject['id']=(finalList.length+1)*10+1;
+                        for(childElement in msg[node]["chipInstanceList"][childChipInstance]){
+                            if(childElement=="siteAddress"){
+                                chipObject['node']=msg[node]["chipInstanceList"][childChipInstance][childElement];
+                            }
+                            else if(childElement=="updateDate"){
+                                chipObject['date']=msg[node]["chipInstanceList"][childChipInstance][childElement];
+                            }
+                            else if(childElement=="deviceName"){
+                                chipObject['account']=msg[node]["chipInstanceList"][childChipInstance][childElement];
+                            }
+                        }
 
+                        //todo add the chip object to childrenList
+                        childrenList[childrenList.length]=chipObject;
+                    }
+                    //todo add the child to "children"
+                    nodeInstance['children']=childrenList;
+                }
+                else{
+                    nodeInstance['numOdInstance']=0;
+                }
+                finalList[finalList.length]=nodeInstance;
+            }
+            this.tableData=finalList;
+        }
     },
     data(){
         return{
@@ -165,7 +211,8 @@ var app = new Vue({
                 status:'connected'
             }],
             watching:0,
-            websock:null
+            websock:null,
+            theInterval:null
         }
     }
 });

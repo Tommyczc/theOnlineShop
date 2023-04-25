@@ -44,12 +44,37 @@ public class webSocketServerHandler_ForNode {
 
     @PostConstruct
     void init(){
+        //date
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        this.date=formatter.format(date);
+
         //todo test node instance
-        node=new NodeInstance("192.4.4.5");
+        this.node=new NodeInstance("192.4.4.5",this.date);
         chipInstance chipA=new chipInstance("tommy","127.0.0.4");
         chipInstance chipB=new chipInstance("tony","127.0.1.34");
         node.chipInstanceList.add(chipA);
         node.chipInstanceList.add(chipB);
+        node.registerName="nanan";
+
+
+        //address
+        this.address="121.2434.55.56:8082";
+
+        webSocketSet.put(address,this);
+
+        //another
+        chipInstance chipC=new chipInstance("fuck","127.0.0.35");
+        chipInstance chipD=new chipInstance("you","127.0.1.890");
+
+        webSocketServerHandler_ForNode node=new webSocketServerHandler_ForNode();
+        node.address="6r7367t8638";
+        node.node=new NodeInstance("6r7367t8638",this.date);
+        node.node.chipInstanceList.add(chipC);
+        node.node.chipInstanceList.add(chipD);
+        node.node.registerName="lalal";
+
+        webSocketSet.put("6r7367t8638",node);
     }
 
     /**
@@ -68,9 +93,9 @@ public class webSocketServerHandler_ForNode {
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(address,this);
         //新建节点，节点实例可以保存每个芯片实体的状态
-        //node=new NodeInstance(address);
+        node=new NodeInstance(address,this.date);
         log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}", address,account,pass);
-        log.info("[WebSocket] 连接成功, 当前连接人数为:={}",webSocketSet.size());
+        log.info("[WebSocket Node] 连接成功, 当前连接人数为:={}",webSocketSet.size());
         log.info("----------------------------------");
     }
 
@@ -80,7 +105,7 @@ public class webSocketServerHandler_ForNode {
     @OnClose
     public void OnClose(){
         webSocketSet.remove(this.address);
-        log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
+        log.info("[WebSocket Node] 退出成功，当前连接人数为：={}",webSocketSet.size());
     }
 
     /**
@@ -88,7 +113,7 @@ public class webSocketServerHandler_ForNode {
      */
     @OnMessage
     public void OnMessage(String message) {
-        log.info("[WebSocket] 收到消息：{}",message);
+        log.info("[WebSocket Node] 收到消息：{}",message);
     }
 
     /**
@@ -98,7 +123,7 @@ public class webSocketServerHandler_ForNode {
      */
     @OnError
     public void onError(Session session, Throwable error){
-        log.info("[WebSocket] 发生错误: {}",error.getMessage());
+        log.info("[WebSocket Node] 发生错误: {}",error.getMessage());
     }
 
     /**
