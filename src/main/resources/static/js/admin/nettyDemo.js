@@ -5,14 +5,14 @@ var app = new Vue({
         console.log("web socket is opening");
         this.initWebSocket();
     },
-    destroyed() {
-        console.log("web socket is closing");
-        this.websock.close(); //离开路由之后断开websocket连接
-    },
+    // destroyed() {
+    //     console.log("destroy: web socket is closing");
+    //     this.websock.close(); //离开路由之后断开websocket连接
+    // },
 
     mounted() {        //写在mounted或者activated生命周期内即可
         window.onbeforeunload = e => {
-            console.log("web socket is closing");
+            console.log("mount: web socket is closing");
             this.websock.close();
             return ''
         };
@@ -66,6 +66,7 @@ var app = new Vue({
             //连接建立之后执行send方法发送数据
             // let actions = {"room":"007854ce7b93476487c7ca8826d17eba","info":"1121212"};
             // this.websocketsend(JSON.stringify(actions));
+            this.timer = setInterval(this.updateRequest, 1000);
         },
         // 通信发生错误时触发
         websocketonerror() {
@@ -119,8 +120,9 @@ var app = new Vue({
             console.log("this is msg object------------------------"+jsonObject);
             for(node in msg){
                 const nodeInstance={};
+                nodeInstance['id']=finalList.length+1;
                 for(element in msg[node]){
-                    nodeInstance['id']=finalList.length+1;
+
                     if(element=="address") {
                         nodeInstance['node'] =msg[node][element];
                     }
@@ -134,10 +136,11 @@ var app = new Vue({
                 if(msg[node].hasOwnProperty ("chipInstanceList")){
                     nodeInstance['numOdInstance']=msg[node]["chipInstanceList"].length;
                     childrenList=[];
+                    let times=0;
                     for(childChipInstance in msg[node]["chipInstanceList"]){
                         console.log("child chip --------------------"+JSON.stringify(msg[node]["chipInstanceList"][childChipInstance]));
                         chipObject={};
-                        chipObject['id']=(finalList.length+1)*10+1;
+                        chipObject['id']=nodeInstance['id']*10+times++;
                         for(childElement in msg[node]["chipInstanceList"][childChipInstance]){
                             if(childElement=="siteAddress"){
                                 chipObject['node']=msg[node]["chipInstanceList"][childChipInstance][childElement];
@@ -162,6 +165,11 @@ var app = new Vue({
                 finalList[finalList.length]=nodeInstance;
             }
             this.tableData=finalList;
+        },
+        updateRequest(){
+            var requestObject={order:"update"};
+            var obj=JSON.stringify(requestObject);
+            this.websocketsend(obj);
         }
     },
     data(){
@@ -211,8 +219,9 @@ var app = new Vue({
                 status:'connected'
             }],
             watching:0,
-            websock:null,
-            theInterval:null
+            websock:"",
+            theInterval:null,
+            timer:""
         }
     }
 });
