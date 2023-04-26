@@ -1,5 +1,7 @@
 package com.theOnlineShop.websocket;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -112,8 +114,10 @@ public class webSocketServerHandler_ForNode {
      * 收到客户端消息后调用的方法
      */
     @OnMessage
-    public void OnMessage(String message) {
-        log.info("[WebSocket Node] 收到消息：{}",message);
+    public void OnMessage(Session session,String message) {
+        //log.info("[WebSocket Node] 收到消息：{}",message);
+        JSONObject js=JSONObject.parseObject(message);
+        log.info(js.getString("order"));
     }
 
     /**

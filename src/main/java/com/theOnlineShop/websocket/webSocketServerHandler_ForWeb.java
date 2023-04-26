@@ -1,5 +1,6 @@
 package com.theOnlineShop.websocket;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -44,11 +45,7 @@ public class webSocketServerHandler_ForWeb {
                 WebsocketUtil.getRemoteAddress(session).toString(),
                 webSocketSet.size()
         );
-
-        JSONObject js=new JSONObject();
-        js.put("order","update");
-        js.put("msg",webSocketServerHandler_ForNode.getAllNode());
-        js.put("onlineNumber",webSocketSet.size());
+        JSONObject js=updateRequest();
         AppointSending(this.ip,js.toJSONString());
         log.info("----------------------------------");
     }
@@ -67,8 +64,16 @@ public class webSocketServerHandler_ForWeb {
      */
     @OnMessage
     public void OnMessage(String message) {
-        log.info("[WebSocket Web] 收到消息：{}",message);
-        JSONObject theObject=JSONObject.parseObject(message);
+        //log.info("[WebSocket Web] 收到消息：{}",message);
+        JSONObject jsonObject= JSON.parseObject(message);
+        String order=jsonObject.getString("order");
+        switch (order){
+            case "update":
+                AppointSending(this.ip,updateRequest().toJSONString());
+                break;
+            case "camera":
+                break;
+        }
     }
 
     @OnError
@@ -93,5 +98,13 @@ public class webSocketServerHandler_ForWeb {
                 e.printStackTrace();
             }
         }
+    }
+
+    public JSONObject updateRequest(){
+        JSONObject js=new JSONObject();
+        js.put("order","update");
+        js.put("msg",webSocketServerHandler_ForNode.getAllNode());
+        js.put("onlineNumber",webSocketSet.size());
+        return js;
     }
 }
