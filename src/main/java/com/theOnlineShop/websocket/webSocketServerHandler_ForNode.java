@@ -1,8 +1,6 @@
 package com.theOnlineShop.websocket;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import javax.websocket.server.ServerEndpoint;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -86,16 +83,24 @@ public class webSocketServerHandler_ForNode {
     @OnOpen
     public void OnOpen(Session session, @PathParam(value = "account") String account, @PathParam(value = "pass") String pass){
         log.info("----------------------------------");
-        this.address=WebsocketUtil.getRemoteAddress(session).toString();
+
+        //todo check register account and pass
+        if(false){
+
+            return;
+        }
+
+        this.address=WebsocketUtil.getRemoteAddress(session).toString().replace("/","");
         this.session = session;
         this.register=account;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         this.date=formatter.format(date);
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
-        webSocketSet.put(address,this);
+        webSocketSet.put(this.address,this);
         //新建节点，节点实例可以保存每个芯片实体的状态
         node=new NodeInstance(address,this.date);
+        node.registerName=account;
         log.info("接收到一个节点请求，地址:{}，账户:{}，密码:{}", address,account,pass);
         log.info("[WebSocket Node] 连接成功, 当前连接人数为:={}",webSocketSet.size());
         log.info("----------------------------------");
