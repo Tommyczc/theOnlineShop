@@ -1,5 +1,7 @@
 package com.theOnlineShop.websocket;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -8,8 +10,10 @@ import javax.annotation.PostConstruct;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,40 +45,40 @@ public class webSocketServerHandler_ForNode {
 
     private NodeInstance node;
 
-    @PostConstruct
-    void init(){
-        //date
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        this.date=formatter.format(date);
-
-        //todo test node instance
-        this.node=new NodeInstance("192.4.4.5",this.date);
-        chipInstance chipA=new chipInstance("tommy","127.0.0.4");
-        chipInstance chipB=new chipInstance("tony","127.0.1.34");
-        node.chipInstanceList.add(chipA);
-        node.chipInstanceList.add(chipB);
-        node.registerName="nanan";
-
-
-        //address
-        this.address="121.2434.55.56:8082";
-
-        webSocketSet.put(address,this);
-
-        //another
-        chipInstance chipC=new chipInstance("fuck","127.0.0.35");
-        chipInstance chipD=new chipInstance("you","127.0.1.890");
-
-        webSocketServerHandler_ForNode node=new webSocketServerHandler_ForNode();
-        node.address="6r7367t8638";
-        node.node=new NodeInstance("6r7367t8638",this.date);
-        node.node.chipInstanceList.add(chipC);
-        node.node.chipInstanceList.add(chipD);
-        node.node.registerName="lalal";
-
-        webSocketSet.put("6r7367t8638",node);
-    }
+//    @PostConstruct
+//    void init(){
+//        //date
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//        Date date = new Date();
+//        this.date=formatter.format(date);
+//
+//        //todo test node instance
+//        this.node=new NodeInstance("192.4.4.5",this.date);
+//        chipInstance chipA=new chipInstance("tommy","127.0.0.4");
+//        chipInstance chipB=new chipInstance("tony","127.0.1.34");
+//        node.chipInstanceList.add(chipA);
+//        node.chipInstanceList.add(chipB);
+//        node.registerName="nanan";
+//
+//
+//        //address
+//        this.address="121.2434.55.56:8082";
+//
+//        webSocketSet.put(address,this);
+//
+//        //another
+//        chipInstance chipC=new chipInstance("fuck","127.0.0.35");
+//        chipInstance chipD=new chipInstance("you","127.0.1.890");
+//
+//        webSocketServerHandler_ForNode node=new webSocketServerHandler_ForNode();
+//        node.address="6r7367t8638";
+//        node.node=new NodeInstance("6r7367t8638",this.date);
+//        node.node.chipInstanceList.add(chipC);
+//        node.node.chipInstanceList.add(chipD);
+//        node.node.registerName="lalal";
+//
+//        webSocketSet.put("6r7367t8638",node);
+//    }
 
     /**
      * 连接建立成功调用的方法
@@ -122,7 +126,11 @@ public class webSocketServerHandler_ForNode {
     public void OnMessage(Session session,String message) {
         //log.info("[WebSocket Node] 收到消息：{}",message);
         JSONObject js=JSONObject.parseObject(message);
-        log.info(js.getString("order"));
+        JSONArray array = JSON.parseArray(js.get("chipList").toString());
+        this.node.chipInstanceList.clear();
+        for(chipInstance chip:array.toJavaList(chipInstance.class)) {
+            this.node.chipInstanceList.add(chip);
+        }
     }
 
     /**
@@ -132,6 +140,13 @@ public class webSocketServerHandler_ForNode {
      */
     @OnError
     public void onError(Session session, Throwable error){
+        try {
+            session.close();
+            webSocketSet.remove(this.address);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         log.info("[WebSocket Node] 发生错误: {}",error.getMessage());
     }
 

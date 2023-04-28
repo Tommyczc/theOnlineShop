@@ -151,6 +151,9 @@ var app = new Vue({
                             else if(childElement=="deviceName"){
                                 chipObject['account']=msg[node]["chipInstanceList"][childChipInstance][childElement];
                             }
+                            else if(childElement=="status"){
+                                chipObject['status']=msg[node]["chipInstanceList"][childChipInstance][childElement];
+                            }
                         }
 
                         //todo add the chip object to childrenList

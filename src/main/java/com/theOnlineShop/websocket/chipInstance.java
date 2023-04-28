@@ -20,6 +20,9 @@ public class chipInstance {
         this.siteAddress = siteAddress;
         this.status= Status.free;
     }
+    public chipInstance(){
+        this.status= Status.free;
+    }
 
     public Status getStatus() {
         return status;
