@@ -10,6 +10,8 @@ public class osVersion {
     private String windowPath;
     @Value("${personal.fileStore.linuxStaticFileUrl}")
     private String linuxPath;
+    @Value("${personal.fileStore.appleStaticFileUrl}")
+    private String applePath;
 
     //纯本地文件地址
     public String getPath(){
@@ -32,6 +34,10 @@ public class osVersion {
         else if(os!=null&&os.toLowerCase().startsWith("linux")){
             return "file:"+linuxPath;
         }
+//        else if(os!=null){
+//            System.out.println(os);
+//            return null;
+//        }
         else{return null;}
     }
 }
