@@ -63,8 +63,9 @@ public class emailListImpl implements emailListInter {
     @Override
     public boolean deleteEmailVeri(emailVerificationEntity email) {
 //        int i=emailMapper.deleteVerificationCode(email);
-//        if(i==1){return true;}
-        return false;
+//        return i == 1;
+        String emailAddress=email.getEmail();
+        return redisEmailMapper.deleteVerificationCode(emailAddress);
     }
 
 }

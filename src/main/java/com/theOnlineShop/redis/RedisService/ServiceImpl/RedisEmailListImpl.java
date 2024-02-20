@@ -16,7 +16,7 @@ public class RedisEmailListImpl implements RedisEmailListInter {
     @Override
     public boolean setVerificationCode(String email, String code) {
         try{
-        redisUtil.set(email,code,expiredTime* 60L);
+            redisUtil.set(email,code,expiredTime* 60L);
         }catch (Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -31,6 +31,7 @@ public class RedisEmailListImpl implements RedisEmailListInter {
 
     @Override
     public boolean deleteVerificationCode(String email) {
-        return false;
+//        Object result=redisUtil.delete(email);
+        return true;
     }
 }

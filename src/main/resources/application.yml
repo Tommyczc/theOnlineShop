@@ -48,7 +48,8 @@ spring:
   mail:
     host: smtp.qq.com    #邮箱服务器地址
     username: 870667475@qq.com   #邮箱账号
-    password: fbqhtvshhonkbeif       #邮箱授权码
+    port: 587 #邮箱port
+    password: gqnmyltdxgjhbdif       #邮箱授权码
     default-encoding: utf-8    #默认编码
 
   redis:
